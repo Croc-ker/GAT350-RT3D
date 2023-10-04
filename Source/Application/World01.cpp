@@ -20,9 +20,12 @@ namespace nc
 
     void World01::Update(float dt)
     {
-        m_angle += 90 * dt;
+        m_angle += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_SPACE) ? 90 * dt : 0;
+        
         m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? -dt : 0;
         m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? +dt : 0;
+        m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? -dt : 0;
+        m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? +dt : 0;
         m_time += dt;
     }
 
@@ -34,7 +37,7 @@ namespace nc
         // render
         glPushMatrix();
         glTranslatef(m_position.x, m_position.y, 0);
-        glRotatef(m_angle, 0, 0, 10);
+        glRotatef(m_angle, 0, 0, 0);
         glScalef((sin(m_time * 5) + 1) * 0.5f, 1, 1);
 
         glBegin(GL_POLYGON);
@@ -44,7 +47,7 @@ namespace nc
 
         glColor3f(1, 0.2f, 1);
         glVertex2f(0, 0.5f);
-
+         
         glColor3f(0, 0.8f, 0);
         glVertex2f(0.5f, -0.5f);
 

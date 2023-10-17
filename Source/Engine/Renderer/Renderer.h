@@ -9,6 +9,8 @@
 #include <SDL2-2.28.4/include/SDL.h>
 #include <string>
 #include "Gui.h"
+#include "Material.h"
+#include "VertexBuffer.h"
 
 namespace nc
 {

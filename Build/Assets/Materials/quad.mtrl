@@ -1,9 +1,9 @@
 {
-  "program":"shaders/unlit_texture.prog",
-  "textures": [ "textures/linus.jpg" ],
+  "program":"shaders/unlit_multi_texture.prog",
+  "textures": [ "textures/Biden.jpg" ],
   "color":[
       1,
-      0,
+      1,
       1,
       1
     ],

@@ -42,10 +42,9 @@ namespace nc
 	void Material::Bind()
 	{
 		m_program->Use();
-		m_program->SetUniform("color", color);
-		m_program->SetUniform("tiling", tiling);
-		m_program->SetUniform("offset", offset);
-
+		m_program->SetUniform("material.color", color);
+		m_program->SetUniform("material.tiling", tiling);
+		m_program->SetUniform("material.offset", offset);
 
 		for (size_t i = 0; i < m_textures.size(); i++)
 		{
@@ -57,10 +56,9 @@ namespace nc
 	void Material::ProcessGui()
 	{
 		ImGui::Begin("Material");
-		ImGui::ColorEdit4("Color", &color[0]);
-		ImGui::DragFloat2("Tiling", &tiling[0]);
-		ImGui::DragFloat2("Offset", &offset[0] + 1);
-
+		ImGui::ColorEdit4("Color", glm::value_ptr(color));
+		ImGui::DragFloat2("Tiling", glm::value_ptr(tiling), 0.1f);
+		ImGui::DragFloat2("Offset", glm::value_ptr(offset), 0.1f);
 		ImGui::End();
 	}
 }

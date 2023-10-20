@@ -7,8 +7,6 @@ in layout(location = 2) vec2 texcoord;
 out layout(location = 0) vec3 ocolor;
 out layout(location = 1) vec2 otexcoord;
 
-uniform float time;
-
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;

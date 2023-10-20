@@ -5,12 +5,12 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Program.h"
+#include "Gui.h"
+#include "vertexbuffer.h"
+#include "Material.h"
 #include <glad/include/glad/glad.h>
 #include <SDL2-2.28.4/include/SDL.h>
 #include <string>
-#include "Gui.h"
-#include "Material.h"
-#include "VertexBuffer.h"
 
 namespace nc
 {
@@ -37,6 +37,7 @@ namespace nc
 
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
+
 
 		friend class Texture;
 		friend class Gui;

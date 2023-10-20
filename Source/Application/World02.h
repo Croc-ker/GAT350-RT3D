@@ -3,6 +3,7 @@
 #include "Core/Math/Vector2.h"
 #include "Renderer/Renderer.h"
 #include <vector>
+
 namespace nc
 {
 	class World02 : public World
@@ -18,6 +19,7 @@ namespace nc
 		float m_time;
 		vec2 m_position;
 		std::vector<vec2> m_positions;
+
 		GLuint m_vao;
 	};
 }

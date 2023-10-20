@@ -9,15 +9,13 @@ uniform vec4 color;
 uniform vec2 offset;
 uniform vec2 tiling;
 
-layout(binding = 0) uniform sampler2D tex1;
-layout(binding = 1) uniform sampler2D tex2;
+layout(binding = 0) uniform sampler2D tex;
 
 void main()
 {
-	vec4 texcolor1 = texture(tex1, (texcoord * tiling) + offset);	
-	vec4 texcolor2 = texture(tex2, (texcoord * tiling) + offset);
+	vec4 texcolor = texture(tex, (texcoord*tiling) + offset);
 
-	vec4 texcolor = mix(texcolor1, texcolor2, 0.2);
+	if(texcolor.a < 0.8) discard;
 
 	ocolor = texcolor * color;
 }

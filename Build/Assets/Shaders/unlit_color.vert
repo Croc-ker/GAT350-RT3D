@@ -5,8 +5,6 @@ in layout(location = 1) vec3 color;
 
 out layout(location = 0) vec3 ocolor;
 
-uniform float time;
-
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;

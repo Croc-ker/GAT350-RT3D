@@ -17,12 +17,12 @@ namespace nc
 
 	public:
 		Transform() = default;
-		Transform(const glm::vec3& position, const glm::vec3& rotation = glm::vec3{ 1 }, const glm::vec3& scale = glm::vec3{ 1 }) :
+		Transform(const glm::vec3& position, const glm::vec3& rotation = glm::vec3{ 0 }, const glm::vec3& scale = glm::vec3{ 1 }) :
 			position{ position },
 			rotation{ rotation },
 			scale{ scale }
 		{}
-		
+
 		glm::mat4 GetMatrix() const
 		{
 			glm::mat4 ms = glm::scale(scale);

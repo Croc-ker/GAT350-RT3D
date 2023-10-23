@@ -31,7 +31,7 @@ namespace nc
 		m_height = height;
 
 		m_window = SDL_CreateWindow(title.c_str(), 100, 100, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-		
+
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
@@ -46,6 +46,12 @@ namespace nc
 
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(DebugCallback, 0);
+		glDebugMessageControl(
+			GL_DONT_CARE,
+			GL_DONT_CARE,
+			GL_DEBUG_SEVERITY_NOTIFICATION,
+			0, NULL,
+			GL_FALSE);
 
 		glViewport(0, 0, width, height);
 		glEnable(GL_BLEND);
@@ -53,7 +59,7 @@ namespace nc
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
-		
+
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);

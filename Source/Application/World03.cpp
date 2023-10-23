@@ -11,20 +11,19 @@ namespace nc
     {
         m_material = GET_RESOURCE(Material, "materials/quad.mtrl");
 
-       /* m_program = GET_RESOURCE(Program, "shaders/unlit_texture.prog");
+        /*m_program = GET_RESOURCE(Program, "shaders/unlit_texture.prog");
         m_program->Use();
 
         m_texture = GET_RESOURCE(Texture, "textures/llama.jpg");
         m_texture->Bind();
         m_texture->SetActive(GL_TEXTURE0);*/
 
-
-        //vertex dat
+        //vertex data
         float vertexData[] = {
-           -0.8f, -0.8f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-           -0.8f,  0.8f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-           0.8f, -0.8f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-           0.8f,  0.8f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+            -0.8f, -0.8f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            -0.8f,  0.8f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+             0.8f, -0.8f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+             0.8f,  0.8f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
         };
 
         m_vertexBuffer = std::make_shared<VertexBuffer>();
@@ -50,34 +49,27 @@ namespace nc
         ImGui::DragFloat3("Scale", &m_transform.scale[0]);
         ImGui::End();
 
-        //m_transform.rotation.z += 90 * dt;
+        //m_transform.rotation.z += 180 * dt;
 
-        m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * dt : 0;
+        m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * +dt : 0;
         m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? m_speed * -dt : 0;
-
         m_transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? m_speed * -dt : 0;
-        m_transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? m_speed * dt : 0;
-
+        m_transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? m_speed * +dt : 0;
         m_time += dt;
 
         m_material->ProcessGui();
         m_material->Bind();
 
-        //model matrix
+        // model matrix
         m_material->GetProgram()->SetUniform("model", m_transform.GetMatrix());
 
-    /*    GLint uniform = glGetUniformLocation(m_program->m_program, "model");
-        glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(model));*/
-
-        glm::mat4 view = glm::lookAt(glm::vec3{ 0, 0, 3 }, glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 });
+        //view matrix
+        glm::mat4 view = glm::lookAt(glm::vec3{ 0, 0, 5 }, glm::vec3{ 0, 0, 3 }, glm::vec3{ 0, 1, 0 });
         m_material->GetProgram()->SetUniform("view", view);
-      /*  uniform = glGetUniformLocation(m_program->m_program, "view");
-        glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(view));*/
 
+        // projection
         glm::mat4 projection = glm::perspective(glm::radians(70.0f), 800.0f / 600.0f, 0.01f, 100.0f);
-       m_material->GetProgram()->SetUniform("projection", projection);
-       /* uniform = glGetUniformLocation(m_program->m_program, "projection");
-        glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(projection));*/
+        m_material->GetProgram()->SetUniform("projection", projection);
 
         ENGINE.GetSystem<Gui>()->EndFrame();
     }
@@ -87,12 +79,9 @@ namespace nc
         // pre-render
         renderer.BeginFrame();
 
-       
         // render
         m_vertexBuffer->Draw(GL_TRIANGLE_STRIP);
-
         ENGINE.GetSystem<Gui>()->Draw();
-
 
         // post-render
         renderer.EndFrame();

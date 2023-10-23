@@ -20,7 +20,10 @@ namespace nc
 		void ProcessGui();
 
 	public:
-		glm::vec4 color{ 1 };
+		glm::vec3 diffuse{ 1 };
+		glm::vec3 specular{ 1 };
+		float shininess{ 2 };
+
 		glm::vec2 tiling{ 1, 1 };
 		glm::vec2 offset{ 0, 0 };
 	private:

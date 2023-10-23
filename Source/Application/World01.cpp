@@ -7,12 +7,13 @@ namespace nc
 {
     bool World01::Initialize()
     {
-        for (int i = 0; i < 3; i++) {
-            m_positions.push_back({ randomf(-1,1), randomf(-1,1) });
-        }
+        // for(int i = 0; i < 5; i++){
+        //     m_positions.push_back({randomf(-1, 1), randomf(-1, 1)});
+        // }
+
         return true;
     }
-    
+
     void World01::Shutdown()
     {
     }
@@ -21,11 +22,9 @@ namespace nc
     {
         m_angle += 90 * dt;
         m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? -dt : 0;
-        m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? dt : 0;
-
+        m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? +dt : 0;
         m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? -dt : 0;
-        m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? dt : 0;
-
+        m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? +dt : 0;
         m_time += dt;
     }
 
@@ -34,47 +33,38 @@ namespace nc
         // pre-render
         renderer.BeginFrame();
 
-        for (int i = 0; i < 3; i++) {
-            // render
-            glPushMatrix();
-            glTranslatef(m_positions[i].x, m_positions[i].y, 0);
-            // glRotatef(m_angle, 1, 1, 1);
-            //glScalef((sin(m_time * 5) + 1) * 0.5f, 1, 1);
-        
-            glBegin(GL_TRIANGLES);
-        
-            glColor3f(1, 0, 0);
-            glVertex2f(-0.5f, -0.5f);
+        // render
+        glPushMatrix();
+        glTranslatef(m_position.x, m_position.y, 0);
+        glRotatef(m_angle, 1, 0, 1);
+        //glScalef((sin(m_time * 5) + 1) * 0.5f, 1, 1);
 
-            glColor3f(0, 1, 0);
-            glVertex2f(0, 0.5f);
+        glBegin(GL_TRIANGLE_FAN);
 
-            glColor3f(0, 0, 1);
-            glVertex2f(0.5f, -0.5f);
-
-            glEnd();
-
-            glPopMatrix();
-        }
-
-     
-        glBegin(GL_LINE_LOOP);
-
-        glColor3f(1, 0, 0);
-        glVertex2f(-0.5f, -0.5f);
-
-        glColor3f(0, 1, 0);
-        glVertex2f(0.5f, 0.5f);
+        glColor3f(0.7f, 0, 0.7f);
+        glVertex2f(0, 0);
 
         glColor3f(0, 0, 1);
-        glVertex2f(0.5f, -0.5f);
+        glVertex2f(0, 0.5f);
+        
+        glColor3f(0, 0, 1);
+        glVertex2f(-0.5f, 0);
 
-        glColor3f(1, 0, 1);
-        glVertex2f(-0.5f, 0.5f);
+        glColor3f(0, 0, 1);
+        glVertex2f(0, -0.5f);
+
+        glColor3f(0, 0, 1);
+        glVertex2f(0.5f, -0.2f);
+
+        glColor3f(0, 0, 1);
+        glVertex2f(0.5f, 0.2f);
+
+        glColor3f(0, 0, 1);
+        glVertex2f(0, 0.5f);
 
         glEnd();
 
-
+        glPopMatrix();
         // post-render
         renderer.EndFrame();
     }

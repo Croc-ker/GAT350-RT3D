@@ -8,6 +8,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{12f44b7e-14ab-45f8-92f5-598e82de48b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Materials">
+      <UniqueIdentifier>{f0e0c591-97ba-43ca-ab65-f9d6f80c1808}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -73,6 +76,18 @@
     </None>
     <None Include="..\..\Build\Assets\Shaders\lit_texture.vert">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\lit_texture_gouraud.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\lit_texture_gouraud.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\grid.mtrl">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\quad.mtrl">
+      <Filter>Materials</Filter>
     </None>
   </ItemGroup>
 </Project>

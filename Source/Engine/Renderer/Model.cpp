@@ -15,18 +15,24 @@ namespace nc
 		return Load(filename);
 	}
 
-	bool Model::Load(const std::string& filename)
+	bool Model::Load(const std::string& filename, const glm::vec3& translate, const glm::vec3& rotation, const glm::vec3& scale)
 	{
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
-			WARNING_LOG("Could not load assimp file %s" << importer.GetErrorString());
+			WARNING_LOG("Could not load assimp file " << filename << " error string: " << importer.GetErrorString());
 			return false;
 		}
 
-		ProcessNode(scene->mRootNode, scene);
+		glm::mat4 mt = glm::translate(translate);
+		glm::mat4 mr = glm::eulerAngleYXZ(glm::radians(rotation.y), glm::radians(rotation.x), glm::radians(rotation.z));
+		glm::mat4 ms = glm::scale(scale);
+
+		glm::mat4 mx = mt * mr * ms;
+
+		ProcessNode(scene->mRootNode, scene, mx);
 
 		return true;
 	}
@@ -37,22 +43,22 @@ namespace nc
 		m_vertexBuffer->Draw(primitive);
 	}
 
-	void Model::ProcessNode(aiNode* node, const aiScene* scene)
+	void Model::ProcessNode(aiNode* node, const aiScene* scene, const glm::mat4& transform)
 	{
 		// process the current node meshes
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			ProcessMesh(mesh, scene);
+			ProcessMesh(mesh, scene, transform);
 		}
 		// process the current node children
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
-			ProcessNode(node->mChildren[i], scene);
+			ProcessNode(node->mChildren[i], scene, transform);
 		}
 	}
 
-	void Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+	void Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& transform)
 	{
 		std::vector<vertex_t> vertices;
 
@@ -61,12 +67,12 @@ namespace nc
 		{
 			vertex_t vertex;
 
-			vertex.position = glm::vec3{ mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
-			vertex.normal = glm::vec3{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
+			vertex.position = transform * glm::vec4{ mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z, 1 };
+			vertex.normal = transform * glm::vec4{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z, 0 };
 
 			if (mesh->mTangents)
 			{
-				vertex.tangent = glm::vec3{ mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z };
+				vertex.tangent = transform * glm::vec4{ mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z, 0 };
 			}
 			else
 			{

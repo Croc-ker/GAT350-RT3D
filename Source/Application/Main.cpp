@@ -5,7 +5,6 @@
 #include "Core/Core.h"
 #include "Framework/Framework.h"
 #include "Renderer/Renderer.h"
-#include <string>
 
 using namespace std;
 

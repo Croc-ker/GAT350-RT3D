@@ -2,6 +2,7 @@
 #include "World02.h"
 #include "World03.h"
 #include "World04.h"
+#include "World05.h"
 #include "Core/Core.h"
 #include "Framework/Framework.h"
 #include "Renderer/Renderer.h"

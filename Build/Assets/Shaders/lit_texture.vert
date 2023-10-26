@@ -30,14 +30,10 @@ void main()
 {
 	mat4 modelView = view * model;
 	
-	//position of the vertex in world space
+	//convert position and normal to world-view space
 	oposition = vec3(modelView * vec4(vposition, 1));
-	//normal of the vertex in world space
 	onormal = normalize(mat3(modelView) * vnormal);
-	//texture coordinate of the vertex
 	otexcoord = (vtexcoord * material.tiling) + material.offset;
-	//gonna be honest, I'm just abusing stackoverflow and copilot for help since i'm kinda dumb when it comes to this shading thing
-	//and also cross-referencing some friends code since mine didn't like working occasionally
 
 	mat4 mvp = projection * view * model;
 	gl_Position = mvp * vec4(vposition, 1.0);

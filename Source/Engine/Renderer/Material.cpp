@@ -23,31 +23,39 @@ namespace nc
 		// get program resource
 		m_program = GET_RESOURCE(Program, program);
 
-		//read the textures
-
+		// read the textures
 		std::string albedoTextureName;
 		READ_NAME_DATA(document, "albedoTexture", albedoTextureName);
-		if (!albedoTextureName.empty()) {
+		if (!albedoTextureName.empty())
+		{
+			params |= ALBEDO_TEXTURE_MASK;
 			albedoTexture = GET_RESOURCE(Texture, albedoTextureName);
 		}
+
 		std::string specularTextureName;
 		READ_NAME_DATA(document, "specularTexture", specularTextureName);
-		if (!specularTextureName.empty()) {
+		if (!specularTextureName.empty())
+		{
+			params |= SPECULAR_TEXTURE_MASK;
 			specularTexture = GET_RESOURCE(Texture, specularTextureName);
 		}
+
 		std::string emissiveTextureName;
 		READ_NAME_DATA(document, "emissiveTexture", emissiveTextureName);
-		if (!emissiveTextureName.empty()) {
+		if (!emissiveTextureName.empty())
+		{
+			params |= EMISSIVE_TEXTURE_MASK;
 			emissiveTexture = GET_RESOURCE(Texture, emissiveTextureName);
 		}
-		//std::string normalTextureName;
-		//READ_NAME_DATA(document, "normalTexture", normalTextureName);
-		//if (!normalTextureName.empty()) {
-		//	normalTexture = GET_RESOURCE(Texture, normalTextureName);
-		//}
 
+		std::string normalTextureName;
+		READ_NAME_DATA(document, "normalTexture", normalTextureName);
+		if (!normalTextureName.empty())
+		{
+			params |= NORMAL_TEXTURE_MASK;
+			normalTexture = GET_RESOURCE(Texture, normalTextureName);
+		}
 
-		
 		READ_DATA(document, albedo);
 		READ_DATA(document, specular);
 		READ_DATA(document, emissive);
@@ -63,15 +71,30 @@ namespace nc
 		m_program->Use();
 		m_program->SetUniform("material.albedo", albedo);
 		m_program->SetUniform("material.specular", specular);
-		m_program->SetUniform("material.emissive", emissive);
 		m_program->SetUniform("material.shininess", shininess);
+		m_program->SetUniform("material.emissive", emissive);
 		m_program->SetUniform("material.tiling", tiling);
 		m_program->SetUniform("material.offset", offset);
 
-		for (size_t i = 0; i < m_textures.size(); i++)
-		{
-			m_textures[i]->SetActive(GL_TEXTURE0 + (int)i);
-			m_textures[i]->Bind();
+		if (albedoTexture) {
+			albedoTexture->SetActive(GL_TEXTURE0);
+			albedoTexture->Bind();
+		}
+
+		if (specularTexture) {
+			specularTexture->SetActive(GL_TEXTURE1);
+			specularTexture->Bind();
+		}
+
+
+		if (normalTexture) {
+			normalTexture->SetActive(GL_TEXTURE2);
+			normalTexture->Bind();
+		}
+		
+		if (emissiveTexture) {
+			emissiveTexture->SetActive(GL_TEXTURE3);
+			emissiveTexture->Bind();
 		}
 	}
 

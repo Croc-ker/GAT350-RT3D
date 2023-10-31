@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "Framework/Components/CollisionComponent.h"
-#include "Components/LightComponent.h"
-#include "Components/CameraComponent.h"
+#include "Framework/Components/LightComponent.h"
+#include "Framework/Components/CameraComponent.h"
 
 namespace nc
 {
@@ -43,21 +43,22 @@ namespace nc
 		for (auto& actor : m_actors)
 		{
 			if (!actor->active) continue;
-
-			camera = actor->GetComponent<CameraComponent>();
-				if(camera) break;
+			camera = actor->GetComponent <CameraComponent>();
+			if (camera) { break; };
 		}
 
-		// get all shader programs in the resource system
 		auto programs = ResourceManager::Instance().GetAllOfType<Program>();
-		// set all shader programs camera and lights uniforms
 		for (auto& program : programs)
 		{
 			program->Use();
 
-			// set camera in shader program
-			if (camera) camera->SetProgram(program);
-			// set lights in shader program
+			auto programs = ResourceManager::Instance().GetAllOfType<Program>();
+			for (auto& program : programs)
+			{
+				program->Use();
+				if (camera) camera->SetProgram(program);
+			}
+
 			int index = 0;
 			for (auto light : lights)
 			{
@@ -141,9 +142,7 @@ namespace nc
 		{
 			if (ImGui::Selectable(actor->name.c_str(), actor->guiSelect))
 			{
-				//set all actors guis to false
 				std::for_each(m_actors.begin(), m_actors.end(), [](auto& a) { a->guiSelect = false; });
-				//set selected actor gui to true
 				actor->guiSelect = true;
 			}
 		}

@@ -6,11 +6,13 @@
 #include "Core/Core.h"
 #include "Framework/Framework.h"
 #include "Renderer/Renderer.h"
+#include "Core/StringUtils.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
+
 	INFO_LOG("Initialize Engine...")
 
 	//nc::MemoryTracker::Initialize();
@@ -38,6 +40,6 @@ int main(int argc, char* argv[])
 
 	world->Shutdown();
 	ENGINE.Shutdown();
-
+	
 	return 0;
 }

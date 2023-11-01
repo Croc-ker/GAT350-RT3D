@@ -69,6 +69,7 @@ namespace nc
 	void Material::Bind()
 	{
 		m_program->Use();
+		m_program->SetUniform("material.params", params);
 		m_program->SetUniform("material.albedo", albedo);
 		m_program->SetUniform("material.specular", specular);
 		m_program->SetUniform("material.shininess", shininess);
@@ -91,7 +92,7 @@ namespace nc
 			normalTexture->SetActive(GL_TEXTURE2);
 			normalTexture->Bind();
 		}
-		
+
 		if (emissiveTexture) {
 			emissiveTexture->SetActive(GL_TEXTURE3);
 			emissiveTexture->Bind();

@@ -43,7 +43,7 @@ namespace nc
 
 		// create index buffer
 		glGenBuffers(1, &m_ibo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo); // the index buffer will use GL_ELEMENT_ARRAY_BUFFER
 
 		GLsizei size = 0; // index count * number of bytes of type (sizeof() returns the number of bytes in the data type)
 		switch (m_indexType)

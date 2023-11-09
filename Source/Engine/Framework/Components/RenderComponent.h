@@ -7,6 +7,5 @@ namespace nc
 	{
 	public:
 		virtual void Draw(class Renderer& renderer) = 0;
-
 	};
 }

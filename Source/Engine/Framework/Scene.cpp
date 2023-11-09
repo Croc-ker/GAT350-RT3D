@@ -43,27 +43,29 @@ namespace nc
 		for (auto& actor : m_actors)
 		{
 			if (!actor->active) continue;
+
 			camera = actor->GetComponent <CameraComponent>();
 			if (camera) { break; };
+				
 		}
+		
 
+	
+
+		// get all shader programs in the resource system
 		auto programs = ResourceManager::Instance().GetAllOfType<Program>();
+		// set all shader programs camera and lights uniforms
 		for (auto& program : programs)
 		{
 			program->Use();
 
-			auto programs = ResourceManager::Instance().GetAllOfType<Program>();
-			for (auto& program : programs)
-			{
-				program->Use();
-				if (camera) camera->SetProgram(program);
-			}
+			// set camera in shader program
+			if (camera) camera->SetProgram(program);
 
 			int index = 0;
 			for (auto light : lights)
 			{
 				std::string name = "lights[" + std::to_string(index++) + "]";
-
 				light->SetProgram(program, name);
 			}
 
@@ -71,10 +73,10 @@ namespace nc
 			program->SetUniform("ambientLight", ambientColor);
 		}
 
-		for (auto& actor : m_actors)
-		{
-			if (actor->active) actor->Draw(renderer);
-		}
+        for (auto& actor : m_actors)
+        {
+            if (actor->active) actor->Draw(renderer);
+        }
 	}
 
 	void Scene::Add(std::unique_ptr<Actor> actor)
@@ -130,6 +132,7 @@ namespace nc
 				}
 			}
 		}
+
 	}
 
 	void Scene::ProcessGui()
@@ -137,6 +140,8 @@ namespace nc
 		ImGui::Begin("Scene");
 		ImGui::ColorEdit3("Ambient", glm::value_ptr(ambientColor));
 		ImGui::Separator();
+
+
 
 		for (auto& actor : m_actors)
 		{
@@ -147,6 +152,8 @@ namespace nc
 			}
 		}
 		ImGui::End();
+
+
 
 		ImGui::Begin("Inspector");
 		auto iter = std::find_if(m_actors.begin(), m_actors.end(), [](auto& a) { return a->guiSelect; });

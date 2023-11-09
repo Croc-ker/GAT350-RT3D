@@ -2,6 +2,7 @@
 #include "Program.h"
 #include "Texture.h"
 #include "Core/Core.h"
+#include "Cubemap.h"
 #include <imgui/imgui.h>
 
 namespace nc
@@ -56,6 +57,16 @@ namespace nc
 			normalTexture = GET_RESOURCE(Texture, normalTextureName);
 		}
 
+		std::string cubemapName;
+		READ_NAME_DATA(document, "cubemap", cubemapName);
+		if (!cubemapName.empty())
+		{
+			params |= CUBEMAP_TEXTURE_MASK;
+			std::vector<std::string> cubemaps;
+			READ_DATA(document, cubemaps);
+			cubemapTexture = GET_RESOURCE(Cubemap, cubemapName, cubemaps);
+		}
+
 		READ_DATA(document, albedo);
 		READ_DATA(document, specular);
 		READ_DATA(document, emissive);
@@ -92,11 +103,17 @@ namespace nc
 			normalTexture->SetActive(GL_TEXTURE2);
 			normalTexture->Bind();
 		}
-
+		
 		if (emissiveTexture) {
 			emissiveTexture->SetActive(GL_TEXTURE3);
 			emissiveTexture->Bind();
 		}
+
+		if (cubemapTexture) {
+			cubemapTexture->SetActive(GL_TEXTURE4);
+			cubemapTexture->Bind();
+		}
+		
 	}
 
 	void Material::ProcessGui()

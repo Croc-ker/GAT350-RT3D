@@ -15,19 +15,19 @@ namespace nc
 		return Load(filename);
 	}
 
-	bool Model::Load(const std::string& filename, const glm::vec3& translate, const glm::vec3& rotation, const glm::vec3& scale)
+	bool Model::Load(const std::string& filename, const glm::vec3& translate , const glm::vec3& rotation , const glm::vec3& scale)
 	{
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
-			WARNING_LOG("Could not load assimp file " << filename << " error string: " << importer.GetErrorString());
+			WARNING_LOG("Could not load assimp file %s" << importer.GetErrorString());
 			return false;
 		}
 
 		glm::mat4 mt = glm::translate(translate);
-		glm::mat4 mr = glm::eulerAngleYXZ(glm::radians(rotation.y), glm::radians(rotation.x), glm::radians(rotation.z));
+		glm::mat4 mr = glm::eulerAngleXYZ(glm::radians(rotation.x), glm::radians(rotation.y), glm::radians(rotation.z));
 		glm::mat4 ms = glm::scale(scale);
 
 		glm::mat4 mx = mt * mr * ms;
@@ -39,7 +39,6 @@ namespace nc
 
 	void Model::Draw(GLenum primitive)
 	{
-		m_material->Bind();
 		m_vertexBuffer->Draw(primitive);
 	}
 

@@ -9,7 +9,6 @@ out layout(location = 0) vec3 oposition;
 out layout(location = 1) vec2 otexcoord;
 out layout(location = 2) mat3 otbn;
 
-
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
@@ -34,11 +33,14 @@ void main()
 	otexcoord = (vtexcoord * material.tiling) + material.offset;
 	mat4 modelView = view * model;
 	
+	//convert position and normal to world-view space
 	oposition = vec3(modelView * vec4(vposition, 1));
+
+	// calculate the matrix
 	vec3 normal = normalize(mat3(modelView) * vnormal);
 	vec3 tangent = normalize(mat3(modelView) * vtangent);
 	vec3 bitangent = cross(normal, tangent);
-
+	
 	otbn = mat3(tangent, bitangent, normal);
 
 	mat4 mvp = projection * view * model;

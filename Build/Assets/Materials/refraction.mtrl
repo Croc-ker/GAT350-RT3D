@@ -1,0 +1,12 @@
+{
+  "program": "shaders/refraction.prog",
+  "cubemap": "Storforsen",
+  "cubemaps": [
+    "textures/Storforsen/posx.jpg",
+    "textures/Storforsen/negx.jpg",
+    "textures/Storforsen/posy.jpg",
+    "textures/Storforsen/negy.jpg",
+    "textures/Storforsen/posz.jpg",
+    "textures/Storforsen/negz.jpg"
+  ]
+}

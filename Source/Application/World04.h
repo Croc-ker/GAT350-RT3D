@@ -39,7 +39,6 @@ namespace nc
 		float m_time = 0;
 		float m_speed = 10.0f;
 
-		Transform m_transform;
 
 		//light_t m_light;
 		light_t m_lights[3];
@@ -50,8 +49,10 @@ namespace nc
 		res_t<VertexBuffer> m_vertexBuffer;
 		res_t<Program> m_program;
 		res_t<Texture> m_texture;
-		res_t<Material> m_material;
+
+		Transform m_transform;
 		res_t<Model> m_model;
+		res_t<Material> m_material;
 
 	};
 }

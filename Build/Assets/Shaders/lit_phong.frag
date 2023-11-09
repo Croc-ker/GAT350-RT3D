@@ -54,26 +54,37 @@ layout(binding = 3) uniform sampler2D emissiveTexture;
 void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, out vec3 specular)
 {
 	//DIFFUSE
+	// find the direction the light is moveing in by subtracting the fragment position from the light source position and then normalize it
 	vec3 lightDirection = (light.type == DIRECTIONAL) ? normalize(light.direction) : normalize(light.position - position);
 	
 	float spotIntensity = 1;
 	if(light.type == SPOT){
-		float angle = acos(dot(light.direction, -lightDirection));
-		spotIntensity = smoothstep(light.outerAngle + 0.001f, light.innerAngle, angle);
+		float cosine = acos(dot(light.direction, -lightDirection));
+		//if (cosine > light.innerAngle) spotIntensity = 0;
+		spotIntensity = smoothstep(light.outerAngle + 0.001f, light.innerAngle, cosine);
 	}
 	
+	// find the intensity by doing the dot product of the light direction with the fragment normal then we clampp this value between 0 and 1
 	float intensity = max(dot(lightDirection, normal), 0) * spotIntensity;	
+	//finally we get the diffuse color by multiplying the light color by the intensity and then multiplying that product by the materials diffuse
 	diffuse = (light.color * intensity);
 
 	//SPECULAR
 	specular = vec3(0);
+	//first we check to see if the intensity is greater then 0 or not
 	if(intensity > 0){
+	//if it is then we find the reflection by using reflect on the inverse of our light direction and the fragment normal
 		vec3 reflection = reflect(-lightDirection, normal);
+		//we find the view direction by normalizing the inverse of the fragment normal
 		vec3 viewDirection = normalize(-position);
+		// then we find the intensity by doing the dot product of the reflection and view direction and then we clamp it
 		intensity = max(dot(reflection, viewDirection), 0);
+		//next we raise intensity by the power of shininess
 		intensity = pow(intensity, material.shininess);
+		//then we multiply the material specular by the intesity
 		specular = vec3(intensity * spotIntensity);
 	}
+	//finally we add all of our lights and return the sum
 }
 
 float attenuation(in vec3 position1, in vec3 position2, in float range)
@@ -85,12 +96,32 @@ float attenuation(in vec3 position1, in vec3 position2, in float range)
  
 	return attenuation;
 }
+
+
+//vec3 ads(in vec3 position, in vec3 normal)
+//{
+//	//AMBIENT
+//	vec3 ambient = ambientLight;
+//
+//	//ATTENUATION
+//	float attenuation = 1;
+//	if(light.type != DIRECTIONAL){
+//		float distanceSqr = dot(light.position - position, light.position - position);
+//		float rangeSqr = light.range *light.range;
+//		attenuation = max(0, 1 - pow((distanceSqr / rangeSqr), 2.0f));
+//		attenuation = attenuation * attenuation;
+//	}
+//
+//	
+//	return ambient + (diffuse + specular) * light.intensity * attenuation;
+//}
+//
 void main()
 {
 	vec4 albedoColor = bool(material.params & ALBEDO_TEXTURE_MASK) ? texture(albedoTexture, ftexcoord) : vec4(material.albedo, 1);
 	vec4 specularColor = bool(material.params & SPECULAR_TEXTURE_MASK) ? texture(specularTexture, ftexcoord) : vec4(material.specular, 1);
 	vec4 emissiveColor = bool(material.params & EMISSIVE_TEXTURE_MASK) ? texture(emissiveTexture, ftexcoord) : vec4(material.emissive, 1);
-
+	
 	//vec4 albedoColor = texture(albedoTexture, ftexcoord);//vec4(material.specular, 1);
 	//vec4 specularColor = texture(specularTexture, ftexcoord);//vec4(material.specular, 1);
 	//vec4 emissiveColor = texture(emissiveTexture, ftexcoord);//vec4(material.emissive, 1);

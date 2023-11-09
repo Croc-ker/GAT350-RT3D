@@ -1,5 +1,6 @@
 #include "EnginePhysicsComponent.h"
 #include "Framework/Actor.h"
+#include <glm/glm/glm.hpp>
 
 namespace nc
 {

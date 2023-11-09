@@ -1,5 +1,6 @@
 #include "World02.h"
 #include "Framework/Framework.h"
+#include "glm/glm/glm.hpp"
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
 
@@ -170,7 +171,7 @@ namespace nc
         m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? +dt : 0;
         m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? -dt : 0;
         m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? +dt : 0;
-        m_time += dt;
+        m_time += dt; 
     }
 
     void World02::Draw(Renderer& renderer)

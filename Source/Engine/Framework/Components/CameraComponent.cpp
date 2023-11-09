@@ -2,7 +2,6 @@
 #include "Framework/Actor.h"
 #include "Framework/Engine.h"
 
-
 namespace nc
 {
 	CLASS_DEFINITION(CameraComponent)
@@ -14,7 +13,7 @@ namespace nc
 		{
 			// set aspect with renderer width / renderer height (make sure it is a floating point division)
 			// aspect = width / height;
-			aspect = ENGINE.GetSystem<Renderer>()->GetWidth() / ENGINE.GetSystem<Renderer>()->GetHeight();
+			aspect = (float)ENGINE.Instance().GetSystem<Renderer>()->GetWidth() / (float)ENGINE.Instance().GetSystem<Renderer>()->GetHeight();
 		}
 
 		return true;
@@ -22,12 +21,12 @@ namespace nc
 
 	void CameraComponent::Update(float dt)
 	{
-		//set view matrix with glm::lookAt function, use owner position
-		view = glm::lookAt(m_owner->transform.position, m_owner->transform.position + m_owner->transform.Forward(), glm::vec3(0,1,0));
-		
-		//set projection matrix with glm::perspective function (fov is in degrees, convert to radians)
+		// set view matrix with glm::lookAt function, use owner position
+		// view = glm::lookAt(<owner transform position>, <owner transform position + owner transform forward>, <up vector>);
+		view = glm::lookAt(m_owner->transform.position, m_owner->transform.position + m_owner->transform.Forward(), m_owner->transform.Up());
+		// set projection matrix with glm::perspective function (fov is in degrees, convert to radians)
+		// projection = glm::perspective(<parameters>);
 		projection = glm::perspective(glm::radians(fov), aspect, near, far);
-
 
 	}
 
@@ -40,12 +39,15 @@ namespace nc
 		this->far = far;
 
 		// set projection matrix with glm::perspective function (fov is in degrees, convert to radians)
+		// projection = glm::perspective(<parameters>);
 		projection = glm::perspective(glm::radians(fov), aspect, near, far);
+
 	}
 
 	void CameraComponent::SetLookAt(const glm::vec3& eye, const glm::vec3& center, const glm::vec3& up)
 	{
 		// set view matrix with glm::lookAt function
+		// view = glm::lookAt(<parameters>)
 		view = glm::lookAt(eye, center, up);
 	}
 
@@ -60,10 +62,10 @@ namespace nc
 	void CameraComponent::ProcessGui()
 	{
 		// use ImGui::DragFloat to set fov, aspect, near and far values (use speed of 0.1f)
-		ImGui::DragFloat("fov", &fov, 0.1f);
-		ImGui::DragFloat("aspect", &aspect, 0.1f);
-		ImGui::DragFloat("near", &near, 0.1f);
-		ImGui::DragFloat("far", &far, 0.1f);
+		ImGui::DragFloat("FOV", &fov, 0.1f);
+		ImGui::DragFloat("Aspect", &aspect, 0.1f);
+		ImGui::DragFloat("Near", &near, 0.1f);
+		ImGui::DragFloat("Far", &far, 0.1f);
 	}
 
 	void CameraComponent::Read(const json_t& value)

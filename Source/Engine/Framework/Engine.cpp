@@ -40,7 +40,6 @@ namespace nc
 		// update sdl events
 		SDL_Event event;
 		SDL_PollEvent(&event);
-
 		GetSystem<Gui>()->ProcessEvent(event);
 		
 		// update time

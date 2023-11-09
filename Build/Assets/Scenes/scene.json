@@ -2,10 +2,49 @@
 	"actors": [
 		{
 			"type": "Actor",
-			"name": "actor1",
+			"name": "skybox",
 			"persistent": true,
 			"transform": {
-				"position": [ 0, 0, 1 ],
+				"position": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"rotation": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/cube.obj",
+					"materialName": "materials/skybox.mtrl",
+					"enableDepth": false,
+					"cullface": "front"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "tree",
+			"persistent": true,
+			"active": true,
+			"prototype": true,
+			"transform": {
+				"position": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"rotation": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/tree.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "ogre",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, 0 ],
 				"scale": [ 1, 1, 1 ],
 				"rotation": [ 0, 0, 0 ]
 			},
@@ -28,7 +67,13 @@
 			},
 			"components": [
 				{
-					"type": "LightComponent"
+					"type": "LightComponent",
+					"lightType": "point",
+					"color": [ 1, 1, 1 ],
+					"intensity": 1,
+					"range": 400,
+					"innerAngle": 45,
+					"outerAngle": 90
 				}
 			]
 		}

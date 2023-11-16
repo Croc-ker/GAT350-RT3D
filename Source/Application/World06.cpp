@@ -4,6 +4,8 @@
 #include <glm/glm/gtc/type_ptr.hpp>
 #include <glm/glm/gtx/color_space.hpp>
 
+#define INTERLEAVE
+
 namespace nc
 {
     bool World06::Initialize()
@@ -20,35 +22,95 @@ namespace nc
         framebuffer->CreateFramebuffer(texture);
         ADD_RESOURCE("fb", framebuffer);
 
-        auto material = GET_RESOURCE(Material, "materials/framebuffer.mtrl");
-        if (material)
-        {
+        auto material = GET_RESOURCE(Material, "materials/postprocess.mtrl");
+        if (material) {
             material->albedoTexture = texture;
-		}
-     
+        }
+
         return true;
     }
-    
+
     void World06::Shutdown()
     {
     }
 
     void World06::Update(float dt)
     {
-        m_time += dt;
-
         ENGINE.GetSystem<Gui>()->BeginFrame();
 
         m_scene->Update(dt);
         m_scene->ProcessGui();
-              
+
+        //set postprocess gui
+        ImGui::Begin("Post-Process");
+        ImGui::SliderFloat("Blend", &m_blend, 0, 1);
+        bool effect = m_params & INVERT_MASK;
+        if (ImGui::Checkbox("Invert", &effect))
+        {
+            if (effect) m_params |= INVERT_MASK;
+            else m_params &= ~INVERT_MASK;
+        }
+
+        effect = m_params & GRAYSCALE_MASK;
+        if (ImGui::Checkbox("Grayscale", &effect))
+        {
+            if (effect) m_params |= GRAYSCALE_MASK;
+            else m_params &= ~GRAYSCALE_MASK;
+        }
+
+        effect = m_params & COLORTINT_MASK;
+        if (ImGui::Checkbox("Color Tint", &effect))
+        {
+            if (effect)
+            {
+                m_params |= COLORTINT_MASK;
+            }
+            else m_params &= ~COLORTINT_MASK;
+        }
+        ImGui::ColorEdit3("Tint", glm::value_ptr(tint_color));
+
+        effect = m_params & GRAIN_MASK;
+        if (ImGui::Checkbox("Grain", &effect))
+        {
+            if (effect) m_params |= GRAIN_MASK;
+            else m_params &= ~GRAIN_MASK;
+        }
+
+        effect = m_params & SCANLINE_MASK;
+        if (ImGui::Checkbox("Scanline", &effect))
+        {
+            if (effect) m_params |= SCANLINE_MASK;
+            else m_params &= ~SCANLINE_MASK;
+        }
+
+        effect = m_params & CUSTOM_MASK;
+        if (ImGui::Checkbox("Custom", &effect))
+        {
+            if (effect) m_params |= CUSTOM_MASK;
+            else m_params &= ~CUSTOM_MASK;
+        }
+
+        ImGui::End();
+
+        //set posprocess shader
+        auto program = GET_RESOURCE(Program, "shaders/postprocess.prog");
+        if (program)
+        {
+            program->Use();
+            program->SetUniform("blend", m_blend);
+            program->SetUniform("params", m_params);
+            program->SetUniform("tint", tint_color);
+            program->SetUniform("time", ENGINE.GetTime().GetTime());
+        }
+
         ENGINE.GetSystem<Gui>()->EndFrame();
     }
 
     void World06::Draw(Renderer& renderer)
     {
         // pass 1
-        m_scene->GetActorByName("cube")->active = false;
+        m_scene->GetActorByName("postprocess")->active = false;
+
         auto framebuffer = GET_RESOURCE(Framebuffer, "fb");
         renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y);
         framebuffer->Bind();
@@ -59,13 +121,15 @@ namespace nc
         framebuffer->Unbind();
 
         // pass 2
-        m_scene->GetActorByName("cube")->active = true;
+        m_scene->GetActorByName("postprocess")->active = true;
+
         renderer.ResetViewport();
         renderer.BeginFrame();
-        m_scene->Draw(renderer);
+        m_scene->GetActorByName("postprocess")->Draw(renderer);
+        //m_scene->Draw(renderer);
 
+        // post-render
         ENGINE.GetSystem<Gui>()->Draw();
-
         renderer.EndFrame();
     }
 }

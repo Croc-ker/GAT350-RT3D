@@ -15,8 +15,8 @@ int main(int argc, char* argv[])
 {
 	INFO_LOG("Initialize Engine...")
 
-	//nc::MemoryTracker::Initialize();
-	nc::seedRandom((unsigned int)time(nullptr));
+		//nc::MemoryTracker::Initialize();
+		nc::seedRandom((unsigned int)time(nullptr));
 	nc::setFilePath("assets");
 
 	ENGINE.Initialize();

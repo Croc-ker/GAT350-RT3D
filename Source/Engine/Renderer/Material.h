@@ -18,9 +18,6 @@ namespace nc
 		const uint32_t EMISSIVE_TEXTURE_MASK	= (1 << 3); //01000
 		const uint32_t CUBEMAP_TEXTURE_MASK		= (1 << 4); //10000
 
-
-
-
 	public:
 		virtual bool Create(std::string filename, ...) override;
 

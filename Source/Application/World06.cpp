@@ -43,51 +43,51 @@ namespace nc
 
         //set postprocess gui
         ImGui::Begin("Post-Process");
-        ImGui::SliderFloat("Blend", &m_blend, 0, 1);
-        bool effect = m_params & INVERT_MASK;
+        ImGui::SliderFloat("Blend", &blend, 0, 1);
+        bool effect = params & INVERT_MASK;
         if (ImGui::Checkbox("Invert", &effect))
         {
-            if (effect) m_params |= INVERT_MASK;
-            else m_params &= ~INVERT_MASK;
+            if (effect) params |= INVERT_MASK;
+            else params &= ~INVERT_MASK;
         }
 
-        effect = m_params & GRAYSCALE_MASK;
+        effect = params & GRAYSCALE_MASK;
         if (ImGui::Checkbox("Grayscale", &effect))
         {
-            if (effect) m_params |= GRAYSCALE_MASK;
-            else m_params &= ~GRAYSCALE_MASK;
+            if (effect) params |= GRAYSCALE_MASK;
+            else params &= ~GRAYSCALE_MASK;
         }
 
-        effect = m_params & COLORTINT_MASK;
+        effect = params & COLORTINT_MASK;
         if (ImGui::Checkbox("Color Tint", &effect))
         {
             if (effect)
             {
-                m_params |= COLORTINT_MASK;
+                params |= COLORTINT_MASK;
             }
-            else m_params &= ~COLORTINT_MASK;
+            else params &= ~COLORTINT_MASK;
         }
         ImGui::ColorEdit3("Tint", glm::value_ptr(tint_color));
 
-        effect = m_params & GRAIN_MASK;
+        effect = params & GRAIN_MASK;
         if (ImGui::Checkbox("Grain", &effect))
         {
-            if (effect) m_params |= GRAIN_MASK;
-            else m_params &= ~GRAIN_MASK;
+            if (effect) params |= GRAIN_MASK;
+            else params &= ~GRAIN_MASK;
         }
 
-        effect = m_params & SCANLINE_MASK;
+        effect = params & SCANLINE_MASK;
         if (ImGui::Checkbox("Scanline", &effect))
         {
-            if (effect) m_params |= SCANLINE_MASK;
-            else m_params &= ~SCANLINE_MASK;
+            if (effect) params |= SCANLINE_MASK;
+            else params &= ~SCANLINE_MASK;
         }
 
-        effect = m_params & CUSTOM_MASK;
+        effect = params & CUSTOM_MASK;
         if (ImGui::Checkbox("Custom", &effect))
         {
-            if (effect) m_params |= CUSTOM_MASK;
-            else m_params &= ~CUSTOM_MASK;
+            if (effect) params |= CUSTOM_MASK;
+            else params &= ~CUSTOM_MASK;
         }
 
         ImGui::End();
@@ -97,8 +97,8 @@ namespace nc
         if (program)
         {
             program->Use();
-            program->SetUniform("blend", m_blend);
-            program->SetUniform("params", m_params);
+            program->SetUniform("blend", blend);
+            program->SetUniform("params", params);
             program->SetUniform("tint", tint_color);
             program->SetUniform("time", ENGINE.GetTime().GetTime());
         }
@@ -115,7 +115,7 @@ namespace nc
         renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y);
         framebuffer->Bind();
 
-        renderer.BeginFrame({ 0, 0, 1});
+        renderer.BeginFrame({ 0, 0, 1 });
         m_scene->Draw(renderer);
 
         framebuffer->Unbind();

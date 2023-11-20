@@ -9,20 +9,21 @@ namespace nc
 	public:
 		CLASS_DECLARATION(ModelComponent)
 
-		bool Initialize() override;
+			bool Initialize() override;
 		void Update(float dt) override;
 		void Draw(class Renderer& renderer) override;
-
-		//virtual float GetRadius() override { return m_model->GetRadius(); }
+		void ProcessGui() override;
 
 	public:
 		std::string modelName;
 		std::string materialName;
-
 		res_t<Model> model;
 		res_t<Material> material;
 
+		bool castShadow{ true };
 		bool enableDepth{ true };
-		GLint cullface = GL_BACK;
+		GLint cullface = { GL_BACK };
+
+	
 	};
 }

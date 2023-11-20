@@ -22,7 +22,6 @@
 #include "Factory.h"
 #include "Resource/ResourceManager.h"
 #include "Event/EventManager.h"
-#include "framework/Editor.h"
 
 #include "Engine.h"
 

@@ -1,0 +1,17 @@
+{
+  "program": "shaders/cel_shader.prog",
+  "albedoTexture": "Textures/linus.jpg",
+  "albedo": [
+    1,
+    1,
+    1
+  ],
+  "specular": [
+    1,
+    1,
+    1
+  ],
+  "shiny": 60,
+  "tiling": [ 1, 1 ],
+  "offset": [ 0, 0 ]
+}

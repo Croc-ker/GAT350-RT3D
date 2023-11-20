@@ -15,6 +15,8 @@ namespace nc
 
 		void ProcessGui() override;
 
+		glm::mat4 GetShadowMatrix();
+
 	public:
 		enum eType
 		{
@@ -27,7 +29,16 @@ namespace nc
 		glm::vec3 color{ 1 };
 		float intensity = 1;
 		float range = 20;
-		float innerAngle = 20;
-		float outerAngle = 30;
+		float innerangle = 20;
+		float outerangle = 30;
+
+		bool castShadow = false;
+		float shadowSize = 10;
+		float shadowBias = 0.005f;
+		bool celShade = false;
+		int celShading = 4;
+		float specCutoff = 4.0f;
+		float Outline = 4.0f;
+
 	};
 }

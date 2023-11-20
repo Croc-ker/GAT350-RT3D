@@ -1,9 +1,8 @@
 #include "Material.h"
 #include "Program.h"
 #include "Texture.h"
+#include "Renderer/Cubemap.h"
 #include "Core/Core.h"
-#include "Cubemap.h"
-#include <imgui/imgui.h>
 
 namespace nc
 {
@@ -12,6 +11,7 @@ namespace nc
 		// load program json document
 		rapidjson::Document document;
 		bool success = Json::Load(filename, document);
+
 		if (!success)
 		{
 			INFO_LOG("Could not load program file (%s)." << filename);
@@ -58,12 +58,12 @@ namespace nc
 		}
 
 		std::string cubemapName;
-		READ_NAME_DATA(document, "cubemap", cubemapName);
-		if (!cubemapName.empty())
+		if (READ_NAME_DATA(document, "cubemap", cubemapName))
 		{
 			params |= CUBEMAP_TEXTURE_MASK;
 			std::vector<std::string> cubemaps;
 			READ_DATA(document, cubemaps);
+
 			cubemapTexture = GET_RESOURCE(Cubemap, cubemapName, cubemaps);
 		}
 
@@ -83,85 +83,54 @@ namespace nc
 		m_program->SetUniform("material.params", params);
 		m_program->SetUniform("material.albedo", albedo);
 		m_program->SetUniform("material.specular", specular);
-		m_program->SetUniform("material.shininess", shininess);
 		m_program->SetUniform("material.emissive", emissive);
+		m_program->SetUniform("material.shininess", shininess);
 		m_program->SetUniform("material.tiling", tiling);
 		m_program->SetUniform("material.offset", offset);
 
-		if (albedoTexture) {
+		if (albedoTexture)
+		{
 			albedoTexture->SetActive(GL_TEXTURE0);
 			albedoTexture->Bind();
 		}
-
-		if (specularTexture) {
+		if (specularTexture)
+		{
 			specularTexture->SetActive(GL_TEXTURE1);
 			specularTexture->Bind();
 		}
-
-
-		if (normalTexture) {
+		if (normalTexture)
+		{
 			normalTexture->SetActive(GL_TEXTURE2);
 			normalTexture->Bind();
 		}
-		
-		if (emissiveTexture) {
+		if (emissiveTexture)
+		{
 			emissiveTexture->SetActive(GL_TEXTURE3);
 			emissiveTexture->Bind();
 		}
-
-		if (cubemapTexture) {
+		if (cubemapTexture)
+		{
 			cubemapTexture->SetActive(GL_TEXTURE4);
 			cubemapTexture->Bind();
 		}
+		if (depthTexture)
+		{
+			depthTexture->SetActive(GL_TEXTURE5);
+			depthTexture->Bind();
+		}
+	
 		
 	}
 
 	void Material::ProcessGui()
 	{
-		//albedo
-		ImGui::TextColored(ImVec4{ 0, 1, 0, 1 }, "Name: %s", name.c_str());
-		ImGui::Text("Albedo  ");
-		ImGui::SameLine();
-		ImGui::ColorEdit3("Albedo", glm::value_ptr(albedo), ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoInputs);
-		if (albedoTexture)
-		{
-			ImGui::SameLine();
-			ImGui::Text("%s", albedoTexture->name.c_str());
-		}
-
-		//specular
-		ImGui::Text("Specular  ");
-		ImGui::SameLine();
-		ImGui::ColorEdit3("Specular", glm::value_ptr(specular), ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoInputs);
-		if (specularTexture)
-		{
-			ImGui::SameLine();
-			ImGui::Text("%s", specularTexture->name.c_str());
-		}
-
-		//shininess
+		ImGui::Begin("Material");
+		ImGui::ColorEdit3("Albedo", glm::value_ptr(albedo));
+		ImGui::ColorEdit3("Specular", glm::value_ptr(specular));
 		ImGui::DragFloat("Shininess", &shininess, 0.1f, 2.0f, 200.0f);
-
-		//emissive
-		ImGui::Text("Emissive  ");
-		ImGui::SameLine();
-		ImGui::ColorEdit3("Emissive", glm::value_ptr(emissive), ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoInputs);
-		if (emissiveTexture)
-		{
-			ImGui::SameLine();
-			ImGui::Text("%s", emissiveTexture->name.c_str());
-		}
-
-		//normal
-		ImGui::Text("Normal  ");
-		if (normalTexture)
-		{
-			ImGui::SameLine();
-			ImGui::Text("%s", normalTexture->name.c_str());
-		}
-
-		//uv
+		ImGui::ColorEdit3("Emissive", glm::value_ptr(emissive));
 		ImGui::DragFloat2("Tiling", glm::value_ptr(tiling), 0.1f);
 		ImGui::DragFloat2("Offset", glm::value_ptr(offset), 0.1f);
+		ImGui::End();
 	}
 }

@@ -24,6 +24,5 @@ namespace nc
 	protected:
 		bool m_quit = false;
 		std::unique_ptr<Scene> m_scene;
-		std::unique_ptr<class Editor> m_editor;
 	};
 }

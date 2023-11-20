@@ -14,7 +14,6 @@ namespace nc
 
 	void Scene::Update(float dt)
 	{
-		m_dt = dt;
 		// update and remove destroyed actors
 		auto iter = m_actors.begin();
 		while (iter != m_actors.end())
@@ -96,19 +95,6 @@ namespace nc
 		}
 	}
 
-	void Scene::Remove(Actor* actor)
-	{
-		auto iter = m_actors.begin();
-		while (iter != m_actors.end())
-		{
-			if ((*iter).get() == actor) {
-				m_actors.erase(iter);
-				break;
-			}
-			iter++;
-		}
-	}
-
 	bool Scene::Load(const std::string& filename)
 	{
 		rapidjson::Document document;
@@ -151,12 +137,31 @@ namespace nc
 
 	void Scene::ProcessGui()
 	{
-		float fps = 1 / m_dt;
-		float ms = m_dt * 1000;
-		ImVec4 color = (fps < 30) ? ImVec4(1, 0, 0, 1) : ImVec4(1, 1, 1, 1);
-		ImGui::TextColored(color, "%.2f FPS (%.2f)", fps, ms);
+		ImGui::Begin("Scene");
 		ImGui::ColorEdit3("Ambient", glm::value_ptr(ambientColor));
-		
+		ImGui::Separator();
+
+
+
+		for (auto& actor : m_actors)
+		{
+			if (ImGui::Selectable(actor->name.c_str(), actor->guiSelect))
+			{
+				std::for_each(m_actors.begin(), m_actors.end(), [](auto& a) { a->guiSelect = false; });
+				actor->guiSelect = true;
+			}
+		}
+		ImGui::End();
+
+
+
+		ImGui::Begin("Inspector");
+		auto iter = std::find_if(m_actors.begin(), m_actors.end(), [](auto& a) { return a->guiSelect; });
+		if (iter != m_actors.end())
+		{
+			(*iter)->ProcessGui();
+		}
+		ImGui::End();
 	}
 
 }

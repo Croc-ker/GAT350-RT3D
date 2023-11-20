@@ -5,6 +5,37 @@ INFO: Factory.h(74) Class registered: EnginePhysicsComponent
 INFO: Factory.h(74) Class registered: CameraController
 INFO: Factory.h(74) Class registered: CameraComponent
 INFO: Factory.h(74) Class registered: Actor
-INFO: Main.cpp(17) Initialize Engine...
-ERROR: Framebuffer.cpp(45) Error creating frame buffer.
-ASSERT: Renderer.cpp(180) OPENGL Source: OpenGL Type: Error(1286) | Error has been generated. GL error GL_INVALID_FRAMEBUFFER_OPERATION in (null): (ID: 4012793211) framebuffer 1, "" is not complete
+INFO: Main.cpp(21) Initialize Engine...
+WARNING: Texture.cpp(74) Could not create surface: textures/light.png
+WARNING: ResourceManager.h(70) Could not create resource: textures/light.png
+WARNING: Program.cpp(165) Could not find uniform location: shadowVP
+WARNING: Program.cpp(165) Could not find uniform location: shadowBias
+WARNING: Program.cpp(165) Could not find uniform location: shadingLevels
+WARNING: Program.cpp(165) Could not find uniform location: shadowVP
+WARNING: Program.cpp(165) Could not find uniform location: shadowBias
+WARNING: Program.cpp(165) Could not find uniform location: shadingLevels
+WARNING: Program.cpp(165) Could not find uniform location: shadowBias
+WARNING: Program.cpp(165) Could not find uniform location: shadingLevels
+WARNING: Program.cpp(165) Could not find uniform location: lights[0].type
+WARNING: Program.cpp(165) Could not find uniform location: lights[0].position
+WARNING: Program.cpp(165) Could not find uniform location: lights[0].direction
+WARNING: Program.cpp(165) Could not find uniform location: lights[0].color
+WARNING: Program.cpp(165) Could not find uniform location: lights[0].intensity
+WARNING: Program.cpp(165) Could not find uniform location: lights[0].range
+WARNING: Program.cpp(165) Could not find uniform location: lights[0].innerAngle
+WARNING: Program.cpp(165) Could not find uniform location: lights[0].outerAngle
+WARNING: Program.cpp(165) Could not find uniform location: shadowVP
+WARNING: Program.cpp(165) Could not find uniform location: shadowBias
+WARNING: Program.cpp(165) Could not find uniform location: shadingLevels
+WARNING: Program.cpp(165) Could not find uniform location: numLights
+WARNING: Program.cpp(165) Could not find uniform location: ambientLight
+WARNING: Program.cpp(165) Could not find uniform location: material.params
+WARNING: Program.cpp(165) Could not find uniform location: material.albedo
+WARNING: Program.cpp(165) Could not find uniform location: material.emissive
+WARNING: Program.cpp(165) Could not find uniform location: material.params
+WARNING: Program.cpp(165) Could not find uniform location: material.albedo
+WARNING: Program.cpp(165) Could not find uniform location: material.specular
+WARNING: Program.cpp(165) Could not find uniform location: material.emissive
+WARNING: Program.cpp(165) Could not find uniform location: material.shininess
+WARNING: Program.cpp(165) Could not find uniform location: material.tiling
+WARNING: Program.cpp(165) Could not find uniform location: material.offset

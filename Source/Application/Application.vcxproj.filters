@@ -230,5 +230,20 @@
     <None Include="..\..\Build\Assets\Shaders\shadow_depth.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Scenes\scene_celshading.json">
+      <Filter>Scenes</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Scenes\scene_shadowmapping.json">
+      <Filter>Scenes</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\cel.mtrl">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\cel_shader.mtrl">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\ui_light.mtrl">
+      <Filter>Materials</Filter>
+    </None>
   </ItemGroup>
 </Project>

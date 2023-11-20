@@ -9,8 +9,6 @@
 
 namespace nc
 {
-	
-
 	class World05 : public World
 	{
 	public:

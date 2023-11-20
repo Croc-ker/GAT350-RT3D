@@ -46,29 +46,20 @@ vec4 grain(in vec4 color)
 	return vec4(color.rgb * (res+0.5), 1);
 }
 
-
-
 vec4 scanline(in vec4 color)
-{	
-//flashes black big black bar over screen
-//also removes background ojects
-	vec2 v2 = {1280,720};
-	vec2 suv = ftexcoord / v2.xy;
-
-    color = vec4(1.5f * sin(suv.y * v2.y/3.0f + time * 20.0f));
-    color = 1.0f - floor(abs(color));
-    color *= vec4(sin(suv.y), 0, cos( 1.0f - suv.y * 2.0f) , 1);
-    color *= texture(screenTexture, suv);
-    return color;
+{   
+	float scanline = sin(ftexcoord.y * 1000.0f + time * 1000.0f) * 0.5f;
+	return vec4(color.rgb - scanline, color.a);
 }
 
 vec4 custom(in vec4 color)
 {
 	color.r = color.r * (sin(time)+1)/2;
-	color.g = color.g * (cos(time)+1)/2;
-	color.b = color.b * (sin(time/2)+1)/2;
+	color.g = color.g * (cos(time)+1)/3;
+	color.b = color.b * (sin(time/2)+1)/4;
 	color *= texture(screenTexture, ftexcoord);
-	color -= ((sin(time)+1)/2) * invert(color);
+	color -= ((sin(time)+1)/6) * invert(color);
+
 	return vec4(color.r,color.g, color.b, 1);
 }
 

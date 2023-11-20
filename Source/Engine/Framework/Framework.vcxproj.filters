@@ -49,9 +49,6 @@
     <ClCompile Include="Components\RotateComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Editor.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -122,9 +119,6 @@
     </ClInclude>
     <ClInclude Include="Components\RotateComponent.h">
       <Filter>Source\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor.h">
-      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

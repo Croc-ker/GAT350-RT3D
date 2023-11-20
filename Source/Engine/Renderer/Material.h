@@ -1,5 +1,6 @@
 #pragma once
 #include "Framework/Resource/Resource.h"
+#include "GUI.h"
 #include <glm/glm/glm.hpp>
 #include <vector>
 #include <memory>
@@ -12,11 +13,12 @@ namespace nc
 	class Material : public Resource
 	{
 	public:
-		const uint32_t ALBEDO_TEXTURE_MASK		= (1 << 0); //00001
-		const uint32_t SPECULAR_TEXTURE_MASK	= (1 << 1); //00010
-		const uint32_t NORMAL_TEXTURE_MASK		= (1 << 2); //00100
-		const uint32_t EMISSIVE_TEXTURE_MASK	= (1 << 3); //01000
-		const uint32_t CUBEMAP_TEXTURE_MASK		= (1 << 4); //10000
+		const uint32_t ALBEDO_TEXTURE_MASK		= (1 << 0); // 00001
+		const uint32_t SPECULAR_TEXTURE_MASK	= (1 << 1); // 00010
+		const uint32_t NORMAL_TEXTURE_MASK		= (1 << 2); // 00100
+		const uint32_t EMISSIVE_TEXTURE_MASK	= (1 << 3); // 01000
+		const uint32_t CUBEMAP_TEXTURE_MASK		= (1 << 4); // 10000
+
 
 	public:
 		virtual bool Create(std::string filename, ...) override;
@@ -31,7 +33,7 @@ namespace nc
 		glm::vec3 albedo{ 1 };
 		glm::vec3 specular{ 1 };
 		glm::vec3 emissive{ 0 };
-		float shininess = 4.0f;
+		float shininess = 2;
 
 		glm::vec2 tiling{ 1, 1 };
 		glm::vec2 offset{ 0, 0 };
@@ -41,9 +43,9 @@ namespace nc
 		res_t<Texture> normalTexture;
 		res_t<Texture> emissiveTexture;
 		res_t<Texture> cubemapTexture;
+		res_t<Texture> depthTexture;
 
-	private:
+	protected:
 		res_t<Program> m_program;
-		//std::vector<res_t<Texture>> m_textures;
 	};
 }

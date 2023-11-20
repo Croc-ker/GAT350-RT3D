@@ -51,43 +51,7 @@
 				},
 				{
 					"type": "RotateComponent",
-					"m_euler": [ 10, 10, 10 ]
-				}
-			]
-		},
-		{
-			"type": "Actor",
-			"name": "cubeShadow",
-			"persistent": true,
-			"active": true,
-			"transform": {
-				"position": [ 1, 0, 0 ],
-				"scale": [ 1, 1, 1 ],
-				"rotation": [ 0, 0, 0 ]
-			},
-			"components": [
-				{
-					"type": "ModelComponent",
-					"modelName": "models/cube.obj",
-					"materialName": "materials/multi.mtrl"
-				}
-			]
-		},
-		{
-			"type": "Actor",
-			"name": "floorShadow",
-			"persistent": true,
-			"active": true,
-			"transform": {
-				"position": [ 0, -10, 0 ],
-				"scale": [ 5, 5, 5 ],
-				"rotation": [ -90, 0, 0 ]
-			},
-			"components": [
-				{
-					"type": "ModelComponent",
-					"modelName": "models/quad.obj",
-					"materialName": "materials/multi.mtrl"
+					"m_euler": [ 10, 10, 10]
 				}
 			]
 		},
@@ -136,7 +100,7 @@
 				},
 				{
 					"type": "RotateComponent",
-					"m_euler": [ 1, 0, 1 ]
+					"m_euler": [ 1, 0, 1]
 				}
 
 			]

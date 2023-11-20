@@ -13,7 +13,6 @@ in layout(location = 0) vec3 fposition;
 in layout(location = 1) vec2 ftexcoord;
 in layout(location = 2) mat3 ftbn;
 
-
 out layout(location = 0) vec4 ocolor;
 
 uniform struct Material
@@ -33,6 +32,8 @@ uniform vec3 ambientLight;
 
 uniform int numLights = 3;
 
+
+
 uniform struct Light
 {
 	int type;
@@ -50,6 +51,7 @@ layout(binding = 0) uniform sampler2D albedoTexture;
 layout(binding = 1) uniform sampler2D specularTexture;
 layout(binding = 2) uniform sampler2D normalTexture;
 layout(binding = 3) uniform sampler2D emissiveTexture;
+
 
 void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, out vec3 specular)
 {
@@ -105,24 +107,8 @@ float attenuation(in vec3 position1, in vec3 position2, in float range)
 }
 
 
-//vec3 ads(in vec3 position, in vec3 normal)
-//{
-//	//AMBIENT
-//	vec3 ambient = ambientLight;
-//
-//	//ATTENUATION
-//	float attenuation = 1;
-//	if(light.type != DIRECTIONAL){
-//		float distanceSqr = dot(light.position - position, light.position - position);
-//		float rangeSqr = light.range *light.range;
-//		attenuation = max(0, 1 - pow((distanceSqr / rangeSqr), 2.0f));
-//		attenuation = attenuation * attenuation;
-//	}
-//
-//	
-//	return ambient + (diffuse + specular) * light.intensity * attenuation;
-//}
-//
+
+
 void main()
 {
 	vec4 albedoColor = bool(material.params & ALBEDO_TEXTURE_MASK) ? texture(albedoTexture, ftexcoord) : vec4(material.albedo, 1);

@@ -6,9 +6,9 @@
 			"persistent": true,
 			"transform": {
 				"position": [
-					0,
-					0.7,
-					3
+					-0.4,
+					0.4,
+					-2.6
 				],
 				"scale": [
 					0.5,
@@ -44,13 +44,13 @@
 					-0.9
 				],
 				"scale": [ 2, 2, 2 ],
-				"rotation": [ 30, 90, 30]
+				"rotation": [ 30, 90, 30 ]
 			},
 			"components": [
 				{
 					"type": "ModelComponent",
 					"modelName": "Models/cube.obj",
-					"materialName": "materials/multi.mtrl"
+					"materialName": "materials/ogre.mtrl"
 				},
 				{
 					"type": "RotateComponent",
@@ -71,7 +71,7 @@
 				{
 					"type": "ModelComponent",
 					"modelName": "Models/quad.obj",
-					"materialName": "materials/multi.mtrl"
+					"materialName": "materials/ogre.mtrl"
 				}
 			]
 		},
@@ -147,25 +147,19 @@
 			"name": "light1",
 			"persistent": true,
 			"transform": {
-				"position": [ 0, 5, 0 ],
-				"rotation": [ 60, 30, 0 ],
-				"scale": [ 0.1, 0.1, 0.1 ]
+				"position": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"rotation": [ 0, 0, 0 ]
 			},
 			"components": [
 				{
 					"type": "LightComponent",
-					"lightType": "Point",
-					"color": [ 1.0, 1.0, 1.0 ],
-					"intensity": 0.8,
-					"range": 20,
-					"innerangle": 20,
-					"outerangle": 30,
-					"castShadow": true
-				},
-				{
-					"type": "ModelComponent",
-					"modelName": "Models/quad.obj",
-					"materialName": "materials/ui_light.mtrl"
+					"lightType": "point",
+					"color": [ 1, 1, 1 ],
+					"intensity": 1,
+					"range": 400,
+					"innerAngle": 45,
+					"outerAngle": 90
 				}
 			]
 		}

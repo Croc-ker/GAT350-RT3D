@@ -9,6 +9,7 @@
 #include <string>
 
 #define GET_RESOURCE(type, filename, ...) nc::ResourceManager::Instance().Get<type>(filename, __VA_ARGS__)
+#define GET_RESOURCES(type) nc::ResourceManager::Instance().GetAllOfType<type>()
 #define ADD_RESOURCE(name, resource, ...) nc::ResourceManager::Instance().Add(name, resource)
 
 namespace nc
@@ -40,6 +41,8 @@ namespace nc
 			WARNING_LOG("Resource already exists: " << lname);
 			return false;
 		}
+
+		resource->name = lname;
 
 		m_resources[lname] = resource;
 

@@ -142,6 +142,7 @@
     <ClCompile Include="World04.cpp" />
     <ClCompile Include="World05.cpp" />
     <ClCompile Include="World06.cpp" />
+    <ClCompile Include="World07.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Core\Core.vcxproj">
@@ -164,6 +165,7 @@
     <ClInclude Include="World04.h" />
     <ClInclude Include="World05.h" />
     <ClInclude Include="World06.h" />
+    <ClInclude Include="World07.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Build\Assets\Materials\framebuffer.mtrl" />
@@ -202,6 +204,9 @@
     <None Include="..\..\Build\Assets\Shaders\reflection.vert" />
     <None Include="..\..\Build\Assets\Shaders\refraction.prog" />
     <None Include="..\..\Build\Assets\Shaders\refraction.vert" />
+    <None Include="..\..\Build\Assets\Shaders\shadow_depth.frag" />
+    <None Include="..\..\Build\Assets\Shaders\shadow_depth.prog" />
+    <None Include="..\..\Build\Assets\Shaders\shadow_depth.vert" />
     <None Include="..\..\Build\Assets\Shaders\skybox.prog" />
     <None Include="..\..\Build\Assets\Shaders\skybox.vert" />
     <None Include="..\..\Build\Assets\Shaders\unlit_billboard.prog" />

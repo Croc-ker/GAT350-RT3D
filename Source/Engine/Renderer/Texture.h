@@ -26,6 +26,8 @@ namespace nc
 		void SetActive(GLuint uint) { glActiveTexture(uint); };
 		void Bind() { glBindTexture(m_target, m_texture); };
 
+		void ProcessGui() override;
+
 		friend class Renderer;
 		friend class Framebuffer;
 

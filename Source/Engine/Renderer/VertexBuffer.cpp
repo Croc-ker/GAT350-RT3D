@@ -62,7 +62,7 @@ namespace nc
 		// copy data into index buffer
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 	}
-
+		
 	void VertexBuffer::SetAttribute(int attribindex, GLint size, GLsizei stride, GLuint offset)
 	{
 		// size is number of elements (position = 3 (xyz), color = 3 (rgb), texcoord = 2 (uv))

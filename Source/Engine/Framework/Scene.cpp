@@ -92,7 +92,7 @@ namespace nc
 		auto iter = m_actors.begin();
 		while (iter != m_actors.end())
 		{
-			if ((*iter).get() == Actor)
+			if ((*iter).get() == Actor) 
 			{
 				m_actors.erase(iter);
 				break;

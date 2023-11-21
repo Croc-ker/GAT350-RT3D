@@ -48,7 +48,6 @@ namespace nc
 
     void World08::Update(float dt)
     {
-        //GUI!!!!!
         ENGINE.GetSystem<Gui>()->BeginFrame();
 
         m_scene->Update(dt);
@@ -57,7 +56,7 @@ namespace nc
 
         ImGui::Begin("Cel");
         ImGui::SliderInt("Levels", &m_celLevels, 1, 8);
-        ImGui::SliderFloat("Specualr Cutoff", &m_celSpecularCutoff, 0, 1);
+        ImGui::SliderFloat("Specular Cutoff", &m_celSpecularCutoff, 0, 1);
         ImGui::SliderFloat("Outline", &m_celOutline, 0, 1);
         ImGui::End();
 
@@ -87,7 +86,7 @@ namespace nc
         auto lights = m_scene->GetComponents<LightComponent>();
         for (auto light : lights)
         {
-            if (light->castShadow)
+            if (light->castShadow) 
             {
                 glm::mat4 shadowMatrix = light->GetShadowMatrix();
                 program->SetUniform("shadowVP", shadowMatrix);
@@ -95,17 +94,16 @@ namespace nc
         }
 
         auto models = m_scene->GetComponents<ModelComponent>();
-        for (auto model : models)
+        for (auto model : models) 
         {
             if (model->castShadow) {
-                //glCullFace(GL_FRONT);
                 program->SetUniform("model", model->m_owner->transform.GetMatrix());
                 model->model->Draw();
             }
         }
 
         framebuffer->Unbind();
-
+        
 
         // *** pass 2 ***
         renderer.ResetViewport();

@@ -1,37 +1,57 @@
 #include "StringUtils.h"
 
-std::string nc::StringUtils::ToUpper(const std::string& str)
-{
-    std::string result = str;
-    for (char& c : result) {
-        if (c >= 'a' && c <= 'z') {
-            c -= ('a' - 'A');
-        }
-    }
-    return result;
-}
+namespace nc {
+	std::string StringUtils::ToUpper(const std::string& s) {
+		//move to a string I can manipulate
+		std::string result = s;
 
-std::string nc::StringUtils::ToLower(const std::string& str)
-{
-    std::string result = str;
-    for (char& c : result) {
-        if (c >= 'A' && c <= 'Z') {
-            c += ('a' - 'A');
-        }
-    }
-    return result;
-}
+		//loop through the new string
+		for (char& c : result)
+		{
+			//calls the to upper function for each char
+			c = std::toupper(c);
+		}
 
-bool nc::StringUtils::IsEqualIgnoreCase(const std::string string1, const std::string string2)
-{
-    return (ToLower(string1) == ToLower(string2));
-}
+		//returns the changed string
+		return result;
+	}
 
-std::string nc::StringUtils::CreateUnique(const std::string& input)
-{
-    std::string str;
-    static unsigned int counter = 0;
-    str = input + std::to_string(counter);
-    counter++;
-    return str;
+	std::string StringUtils::ToLower(const std::string& s) {
+		//move to a string I can manipulate
+		std::string result = s;
+
+		//loop through the new string
+		for (char& c : result)
+		{
+			//calls the to lower function for each char
+			c = std::tolower(c);
+		}
+
+		//returns the changed string
+		return result;
+	}
+
+	bool StringUtils::IsEqualIgnoreCase(const std::string& s1, const std::string& s2) {
+		//seeing if the string are even the same size
+		if (!(s1.size() == s2.size())) return false;
+
+		//converting each string to an uppercase version (using my to upper function)
+		std::string r1 = ToUpper(s1);
+		std::string r2 = ToUpper(s2);
+
+
+		//doing a loop that is the size of the first string
+		for (int i = 0; i < r1.size(); i++) {
+			//seeing if each char is the same as the other
+			if (r1[i] != r2[i]) return false;
+		}
+		return true;
+	}
+
+	std::string StringUtils::CreateUnique(const std::string& s)
+	{
+		static uint32_t unique = 0;
+
+		return s + std::to_string(unique++);
+	}
 }

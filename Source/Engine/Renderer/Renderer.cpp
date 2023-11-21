@@ -34,7 +34,7 @@ namespace nc
 
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
@@ -46,7 +46,6 @@ namespace nc
 
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(DebugCallback, 0);
-
 		// disable all messages with severity `GL_DEBUG_SEVERITY_NOTIFICATION`
 		glDebugMessageControl(
 			GL_DONT_CARE,
@@ -57,15 +56,14 @@ namespace nc
 
 		glViewport(0, 0, width, height);
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
-		
+
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
-
 	}
 
 	void Renderer::BeginFrame(const glm::vec3& color)
@@ -73,7 +71,6 @@ namespace nc
 		glDepthMask(GL_TRUE);
 		glClearColor(color.r, color.g, color.b, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	}
 
 	void Renderer::EndFrame()
@@ -113,7 +110,7 @@ namespace nc
 
 	void Renderer::SetViewport(int width, int height)
 	{
-		glViewport(0,0,width, height);
+		glViewport(0, 0, width, height);
 	}
 
 	void Renderer::ResetViewport()

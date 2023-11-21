@@ -1,5 +1,6 @@
 #pragma once
 #include "PhysicsComponent.h"
+#include "glm/glm/glm.hpp"
 
 namespace nc
 {

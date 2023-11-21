@@ -2,44 +2,65 @@
 	"actors": [
 		{
 			"type": "Actor",
-			"name": "skybox",
-			"persistent": true,
-			"transform": {
-				"position": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ],
-				"rotation": [ 0, 0, 0 ]
-			},
-			"components": [
-				{
-					"type": "ModelComponent",
-					"modelName": "models/cube.obj",
-					"materialName": "materials/skybox.mtrl",
-					"enableDepth": false,
-					"cullface": "front"
-				}
-			]
-		},
-		{
-			"type": "Actor",
-			"name": "postprocess",
+			"name": "camera",
 			"persistent": true,
 			"active": true,
 			"prototype": false,
+			"transform": {
+				"position": [ 0, 0, 3 ],
+				"scale": [ 1, 1, 1 ],
+				"rotation": [ 0, 180, 0 ]
+			},
 			"components": [
 				{
-					"type": "ModelComponent",
-					"modelName": "models/quad.obj",
-					"materialName": "materials/postprocess.mtrl"
+					"type": "CameraComponent",
+					"fox": 70.0,
+					"aspect": 1.77,
+					"near": 0.1,
+					"far": 100
+				},
+				{
+					"type": "CameraController",
+					"speed": 5,
+					"sensitivity": 0.5
 				}
 			]
 		},
 		{
 			"type": "Actor",
-			"name": "ogre",
+			"name": "light",
 			"persistent": true,
 			"active": true,
 			"transform": {
-				"position": [ 1, 0, 0 ],
+				"position": [ 0, 3, 0 ],
+				"scale": [ 0.1, 0.1, 0.1 ],
+				"rotation": [ 90, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "LightComponent",
+					"lightType": "directional",
+					"color": [ 1, 1, 1 ],
+					"intensity": 1,
+					"range": 20,
+					"innerAngle": 10.0,
+					"outerAngle": 30.0,
+					"castShadow": true
+				},
+				{
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/light.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "actor",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, 1 ],
 				"scale": [ 1, 1, 1 ],
 				"rotation": [ 0, 0, 0 ]
 			},
@@ -47,62 +68,48 @@
 				{
 					"type": "ModelComponent",
 					"modelName": "models/ogre.obj",
-					"materialName": "materials/ogre.mtrl"
+					"materialName": "materials/shrek.mtrl"
 				},
 				{
 					"type": "RotateComponent",
-					"m_euler": [ 10, 10, 10]
+					"euler": [ 0, 100, 0 ]
 				}
 			]
 		},
 		{
 			"type": "Actor",
-			"name": "light1",
+			"name": "Grass",
 			"persistent": true,
+			"active": true,
 			"transform": {
-				"position": [ 0, 0, 0 ],
+				"position": [ -5, 0, 5 ],
 				"scale": [ 1, 1, 1 ],
 				"rotation": [ 0, 0, 0 ]
 			},
 			"components": [
 				{
-					"type": "LightComponent",
-					"lightType": "point",
-					"color": [ 1, 1, 1 ],
-					"intensity": 1,
-					"range": 400,
-					"innerAngle": 45,
-					"outerAngle": 90
+					"type": "ModelComponent",
+					"modelName": "fantasy/obj/SF_Env_Tile_Grass_01.obj",
+					"materialName": "fantasy/fantasy.mtrl"
+				},
+				{
+					"type": "RotateComponent",
+					"euler": [ 0, 0, 0 ]
 				}
 			]
 		},
 		{
 			"type": "Actor",
-			"name": "camera1",
+			"name": "postprocess",
 			"persistent": true,
-			"transform": {
-				"position": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ],
-				"rotation": [ 0, 0, 0 ]
-			},
+			"active": false,
+			"prototype": false,
 			"components": [
 				{
-					"type": "CameraComponent",
-					"fov": 90,
-					"aspect": 1,
-					"near": 0.1,
-					"far": 1000
-				},
-				{
-					"type": "CameraController",
-					"speed": 10,
-					"sensitivity": 0.1
-				},
-				{
-					"type": "RotateComponent",
-					"m_euler": [ 1, 0, 1]
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/postprocess.mtrl"
 				}
-
 			]
 		}
 	]

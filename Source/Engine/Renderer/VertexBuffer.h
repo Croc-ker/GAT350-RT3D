@@ -1,7 +1,6 @@
 #pragma once
-#include "Framework/Resource/Resource.h"
-
 #include <glad/include/glad/glad.h>
+#include "Framework/Resource/Resource.h"
 #include <vector>
 
 namespace nc

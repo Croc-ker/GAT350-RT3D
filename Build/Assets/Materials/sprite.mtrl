@@ -1,6 +1,6 @@
 {
   "program": "shaders/unlit_sprite.prog",
-  "albedoTexture": "textures/ogre_diffuse.bmp",
+  "albedoTexture": "textures/blue-wooden-chair.png",
   "albedo": [
     1,
     1,

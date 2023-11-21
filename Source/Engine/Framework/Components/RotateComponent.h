@@ -1,13 +1,16 @@
 #pragma once
 #include "Component.h"
-namespace nc
-{
-	class RotateComponent : public Component
+
+namespace nc {
+	class RotateComponent : public Component 
 	{
 	public:
 		CLASS_DECLARATION(RotateComponent)
+
+		void ProcessGui();
 		void Update(float dt);
-	private:
-		glm::vec3 m_euler{ 0 };
+
+	public:
+		glm::vec3 euler{ 0 };
 	};
 }

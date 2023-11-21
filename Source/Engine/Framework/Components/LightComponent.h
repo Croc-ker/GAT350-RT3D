@@ -9,7 +9,7 @@ namespace nc
 	public:
 		CLASS_DECLARATION(LightComponent)
 
-			bool Initialize() override;
+		bool Initialize() override;
 		void Update(float dt) override;
 		//void SetProgram(const res_t<Program> program, const std::string& name);
 		void SetProgram(const res_t<Program> program, const std::string& name, const glm::mat4& view);

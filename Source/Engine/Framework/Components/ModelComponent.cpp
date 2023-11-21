@@ -1,7 +1,7 @@
 #include "ModelComponent.h"
 #include "Framework/Actor.h"
 #include "Framework/Resource/ResourceManager.h"
-#include <Core/StringUtils.h>
+#include "Core/StringUtils.h"
 
 namespace nc
 {
@@ -12,11 +12,13 @@ namespace nc
 		if (!modelName.empty())
 		{
 			model = GET_RESOURCE(Model, modelName);
+			//ADD_RESOURCE(modelName, model);
 		}
 		if (model && !materialName.empty())
 		{
 			material = GET_RESOURCE(Material, materialName);
 		}
+
 		return true;
 	}
 
@@ -37,11 +39,8 @@ namespace nc
 
 	void ModelComponent::ProcessGui()
 	{
-		ImGui::Checkbox("Enable Depth", &enableDepth);
 		ImGui::Checkbox("Cast Shadow", &castShadow);
-
-
-
+		ImGui::Checkbox("Enable Depth", &enableDepth);
 	}
 
 	void ModelComponent::Read(const json_t& value)
@@ -50,13 +49,10 @@ namespace nc
 		READ_DATA(value, materialName);
 
 		READ_DATA(value, enableDepth);
-		READ_DATA(value, castShadow);
-
 		std::string cullfaceName;
-		READ_NAME_DATA(value, "cullface", cullfaceName);
-		if (nc::StringUtils::IsEqualIgnoreCase(cullfaceName, "front")) cullface = GL_FRONT;
-		if (nc::StringUtils::IsEqualIgnoreCase(cullfaceName, "back")) cullface = GL_BACK;
-		if (nc::StringUtils::IsEqualIgnoreCase(cullfaceName, "front_and_back")) cullface = GL_FRONT_AND_BACK;
-
+		if (READ_NAME_DATA(value, "cullface", cullfaceName)) {
+			if (StringUtils::IsEqualIgnoreCase(cullfaceName, "front")) cullface = GL_FRONT;
+			if (StringUtils::IsEqualIgnoreCase(cullfaceName, "none")) cullface = GL_NONE;
+		}
 	}
 }

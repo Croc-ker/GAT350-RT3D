@@ -3,13 +3,13 @@
 #include "Font.h"
 #include "Model.h"
 #include "Texture.h"
-#include "FrameBuffer.h"
-#include "Renderer/Cubemap.h"
+#include "Cubemap.h"
 #include "Shader.h"
-#include "Material.h"
 #include "Program.h"
-#include "GUI.h"
+#include "Gui.h"
 #include "VertexBuffer.h"
+#include "Material.h"
+#include "Framebuffer.h"
 
 #include <glad/include/glad/glad.h>
 #include <SDL2-2.28.4/include/SDL.h>
@@ -29,7 +29,7 @@ namespace nc
 		void Update() {}
 
 		void CreateWindow(const std::string& title, int width, int height);
-		void BeginFrame(const glm::vec3& color = glm::vec3(0));
+		void BeginFrame(const glm::vec3& color = glm::vec3{0});
 		void EndFrame();
 
 		void ClearDepth();
@@ -56,7 +56,5 @@ namespace nc
 		SDL_Renderer* m_renderer = nullptr;
 		SDL_Window* m_window = nullptr;
 		SDL_GLContext m_context = nullptr;
-
-		
 	};
 }

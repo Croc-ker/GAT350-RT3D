@@ -81,7 +81,7 @@ namespace nc
 	{
 		std::vector<res_t<T>> result;
 
-		for (auto resource : m_resources)
+		for (auto resource : m_resources) 
 		{
 			auto res = std::dynamic_pointer_cast<T>(resource.second);
 			if (res)

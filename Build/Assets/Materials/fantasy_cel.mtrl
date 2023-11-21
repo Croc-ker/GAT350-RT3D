@@ -4,6 +4,7 @@
   "albedo": [
     1,
     1,
+    1,
     1
   ],
   "specular": [
@@ -11,7 +12,7 @@
     1,
     1
   ],
-  "shininess": 60,
+  "shiness": 60,
   "tiling": [ 1, 1 ],
   "offset": [ 0, 0 ]
 }

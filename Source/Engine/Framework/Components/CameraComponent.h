@@ -7,12 +7,11 @@ namespace nc
 	class CameraComponent : public Component
 	{
 	public:
-		enum eprojectionType
+		enum eProjectionType
 		{
-			perspective,
-			orthographic
+			Perspective,
+			Othrographic
 		};
-
 	public:
 		CLASS_DECLARATION(CameraComponent)
 
@@ -34,7 +33,7 @@ namespace nc
 		float near = 0.1f;
 		float far = 100.0f;
 
-		eprojectionType projectionType = eprojectionType::perspective;
+		eProjectionType projectionType = Perspective;
 		float size{ 8 };
 	};
 }

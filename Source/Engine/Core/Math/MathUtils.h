@@ -1,7 +1,6 @@
 #pragma once
 #include <cmath>
 #include <utility>
-#include <glm/glm/fwd.hpp>
 #include <glm/glm/glm.hpp>
 #include <glm/glm/gtc/quaternion.hpp>
 
@@ -44,40 +43,35 @@ namespace nc
 		return (value < min) ? min : (value > max) ? max : value;
 	}
 
-	template<typename T>
+	template<typename T> 
 	constexpr T Lerp(const T& a, const T& b, float t) // t = 0 <-> 1
 	{
 		return (a * (1.0f - t)) + (b * t);
 	}
 
 	template<typename T>
-	constexpr T SetBits(T param, T mask)
+	constexpr T SetBits(T a, T b)
 	{
-		param |= mask;
-		return param;
+		return a | b;
 	}
 
 	template<typename T>
-	constexpr T ClearBits(T param, T mask)
+	constexpr T ClearBits(T a, T b)
 	{
-		param &= ~mask;
-		return param;
+		return a & ~b;
 	}
 
 	template<typename T>
-	constexpr T ToggleBits(T param, T mask)
+	constexpr T TestBits(T a, T b)
 	{
-		param ^= mask;
-		return param;
+		return a & b;
 	}
 
 	template<typename T>
-	constexpr T TestBits(T param, T mask)
+	constexpr T ToggleBits(T a, T b) 
 	{
-		return param & mask;
+		return a ^ b;
 	}
-
-
 
 	// convert euler angles (degrees) to a quaternion
 	glm::vec3 QuaternionToEuler(const glm::quat& q);

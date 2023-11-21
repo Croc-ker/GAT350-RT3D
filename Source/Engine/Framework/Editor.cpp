@@ -8,7 +8,7 @@ namespace nc
 		//show resources
 		ImGui::Begin("Resources");
 		auto resources = GET_RESOURCES(Resource);
-		for (auto resource : resources) {
+		for(auto resource: resources){
 			if (ImGui::Selectable(resource->name.c_str(), resource.get() == m_selected))
 			{
 				m_selected = resource.get();

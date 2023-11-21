@@ -1,13 +1,16 @@
 #pragma once
 #include <string>
+#include <ctype.h>
 
 namespace nc {
-
 	class StringUtils {
+
 	public:
-		static std::string ToUpper(const std::string& str);
-		static std::string ToLower(const std::string& str);
-		static bool IsEqualIgnoreCase(const std::string string1, const std::string string2);
-		static std::string CreateUnique(const std::string& input);
+		std::string static ToUpper(const std::string& s);
+		std::string static ToLower(const std::string& s);
+		bool static IsEqualIgnoreCase(const std::string& s1, const std::string& s2);
+		std::string static CreateUnique(const std::string& s);
+
+	public:
 	};
 }

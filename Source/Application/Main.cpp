@@ -10,10 +10,6 @@
 #include "Framework/Framework.h"
 #include "Renderer/Renderer.h"
 
-//#include <iostream>
-//#include "Core/StringUtils.h"
-
-
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -25,7 +21,7 @@ int main(int argc, char* argv[])
 	nc::setFilePath("assets");
 
 	ENGINE.Initialize();
-	
+
 	auto world = make_unique<nc::World08>();
 	world->Initialize();
 

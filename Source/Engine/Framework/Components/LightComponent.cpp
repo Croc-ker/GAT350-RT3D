@@ -5,7 +5,7 @@ namespace nc
 {
 	CLASS_DEFINITION(LightComponent)
 
-		bool LightComponent::Initialize()
+	bool LightComponent::Initialize()
 	{
 		return true;
 	}

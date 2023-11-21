@@ -14,11 +14,11 @@
     0.4
   ],
   "emissive": [
-    0,
-    0,
-    0
+    0.0,
+    0.0,
+    0.0
   ],
-  "shininess": 60,
+  "shininess": 2,
   "tiling": [ 1, 1 ],
   "offset": [ 0, 0 ]
 }

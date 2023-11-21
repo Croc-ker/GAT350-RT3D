@@ -32,12 +32,12 @@ void main()
 {
 	mat4 modelView = view * model;
 
-	// convert position and normal to world-view space
+	//convert position and normal to world-view space
 	oposition = vec3(modelView * vec4(vposition, 1));
 	onormal = normalize(mat3(modelView) * vnormal);
 	otexcoord = (vtexcoord * material.tiling) + material.offset;
 
-	// calculate view direction, the oposition has already been moved into world-view space
+	//calculate view direction, the oposition has already in world-view
 	oviewdir = normalize(-oposition);
 
 

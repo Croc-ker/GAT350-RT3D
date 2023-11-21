@@ -64,5 +64,4 @@ namespace nc
 		READ_DATA(value, sensitivity);
 	}
 
-
 }

@@ -1,16 +1,16 @@
 {
   "program": "shaders/lit_phong_cel.prog",
   "albedo": [
-    0,
-    0,
-    1
+    0.6,
+    0.1,
+    0.6
   ],
   "specular": [
     1,
     1,
     1
   ],
-  "shiny": 60,
+  "shiness": 60,
   "tiling": [ 1, 1 ],
   "offset": [ 0, 0 ]
 }

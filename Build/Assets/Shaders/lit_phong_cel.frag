@@ -16,7 +16,6 @@ in layout(location = 3) vec4 fshadowcoord;
 in layout(location = 4) vec3 fviewdir;
 
 out layout(location = 0) vec4 ocolor;
-//out layout(location = 1) vec2 otexcoord;
 
 layout(binding = 0) uniform sampler2D albedoTexture;
 layout(binding = 1) uniform sampler2D specularTexture;
@@ -81,14 +80,11 @@ void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, o
 	if(light.type == SPOT)
 	{
 		float angle = acos(dot(light.direction, -lightDir));
-		//if (angle > light.innerAngle) spotIntensity = 0;
 		spotIntensity = smoothstep(light.outerAngle + 0.001, light.innerAngle, angle);
 	}
 
 	float intensity = max(dot(lightDir, normal), 0) * spotIntensity;
-	//calculate the toon shader
 
-	//float cellIntensity = floor(intensity * 5) * 0.2;
 	diffuse = light.color * (floor(intensity * celLevels) * celScaleFactor);
 
 	//SPECULAR
@@ -97,17 +93,11 @@ void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, o
 	{
 		vec3 viewDir = normalize(-position);
 
-		//phong
-		//vec3 reflection = reflect(-lightDir, normal);
-		//intensity = max(dot(reflection, viewDir), 0);
-
-		//blinn-phong
 		vec3 h = normalize(viewDir + lightDir);
 		intensity = max(dot(h, normal), 0);
 
 		intensity = pow(intensity, material.shininess);
 
-		//calculate the intensity for the toon shader
 		intensity = (intensity < celSpecularCutoff) ? 0 : 1;
 		specular = vec3(intensity * spotIntensity);
 	}
@@ -119,22 +109,18 @@ void main()
 	vec4 specularColor = bool(material.params & SPECULAR_TEXTURE_MASK) ? texture(specularTexture, ftexcoord) : vec4(material.specular,1);
 	vec4 emissiveColor = bool(material.params & EMISSIVE_TEXTURE_MASK) ? texture(emissiveTexture, ftexcoord) : vec4(material.emissive, 1);
 
-	// set ambient + emissive color
-	ocolor = vec4(0);//vec4(ambientLight, 1) * albedoColor + emissiveColor;
+	ocolor = vec4(0);
 
 	float shadow = calculateShadow(fshadowcoord, shadowBias);
  
-	// set lights
 	for (int i = 0; i < numLights; i++)
 	{
-		// outline
-		// check cosine between surface normal and view direction
-		//if less than cel outline threshold use outline color
+		//outline
 		float outline = dot(fnormal, fviewdir);
 		if (outline < celOutline)
 		{
 			ocolor = vec4(0);
-			return; // done rendering this fragment (pixel)
+			return;
 		}
 
 		vec3 diffuse;

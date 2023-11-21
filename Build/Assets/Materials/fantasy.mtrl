@@ -1,6 +1,6 @@
 {
   "program": "shaders/lit_phong.prog",
-  "albedoTexture": "Fantasie/Simple_Fantasy_SourceFiles/Textures/Medieval_Texture.png",
+  "albedoTexture": "Fantasy/Textures/Medieval_Texture.png",
   "albedo": [
     1,
     1,

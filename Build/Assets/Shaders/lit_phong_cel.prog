@@ -1,0 +1,4 @@
+{
+	"vertexShader": "shaders/lit_phong_cel.vert",
+	"fragmentShader": "shaders/lit_phong_cel.frag"
+}

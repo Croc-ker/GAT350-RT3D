@@ -5,16 +5,18 @@ namespace nc
 {
 	void Editor::ProcessGui(Scene* scene)
 	{
+		//show resources
 		ImGui::Begin("Resources");
 		auto resources = GET_RESOURCES(Resource);
 		for (auto resource : resources) {
-			if (ImGui::Selectable(resource->name.c_str(), resource.get() == m_selected)) {
+			if (ImGui::Selectable(resource->name.c_str(), resource.get() == m_selected))
+			{
 				m_selected = resource.get();
 			}
 		}
+
 		ImGui::End();
 
-		//show scene
 		ImGui::Begin("Scene");
 		scene->ProcessGui();
 		ImGui::Separator();
@@ -27,6 +29,7 @@ namespace nc
 				m_selected = actor.get();
 			}
 		}
+
 		ImGui::End();
 
 		//show inspector
@@ -34,7 +37,7 @@ namespace nc
 		if (m_selected)
 		{
 			m_selected->ProcessGui();
-			//delete selected actor
+			// delete selected actor
 			if (ImGui::IsKeyPressed(ImGuiKey_Delete))
 			{
 				auto actor = dynamic_cast<Actor*>(m_selected);
@@ -46,7 +49,5 @@ namespace nc
 			}
 		}
 		ImGui::End();
-
-
 	}
 }

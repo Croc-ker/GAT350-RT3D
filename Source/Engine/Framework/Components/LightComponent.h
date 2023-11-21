@@ -9,9 +9,10 @@ namespace nc
 	public:
 		CLASS_DECLARATION(LightComponent)
 
-		bool Initialize() override;
+			bool Initialize() override;
 		void Update(float dt) override;
-		void SetProgram(const res_t<Program> program, const std::string& name);
+		//void SetProgram(const res_t<Program> program, const std::string& name);
+		void SetProgram(const res_t<Program> program, const std::string& name, const glm::mat4& view);
 
 		void ProcessGui() override;
 
@@ -29,16 +30,11 @@ namespace nc
 		glm::vec3 color{ 1 };
 		float intensity = 1;
 		float range = 20;
-		float innerangle = 20;
-		float outerangle = 30;
+		float innerAngle = 20;
+		float outerAngle = 30;
 
 		bool castShadow = false;
 		float shadowSize = 10;
 		float shadowBias = 0.005f;
-		bool celShade = false;
-		int celShading = 4;
-		float specCutoff = 4.0f;
-		float Outline = 4.0f;
-
 	};
 }

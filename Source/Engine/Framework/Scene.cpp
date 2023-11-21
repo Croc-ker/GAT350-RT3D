@@ -1,7 +1,5 @@
 #include "Scene.h"
-#include "Framework/Components/CollisionComponent.h"
-#include "Framework/Components/LightComponent.h"
-#include "Framework/Components/CameraComponent.h"
+#include "Framework.h"
 
 namespace nc
 {
@@ -14,6 +12,7 @@ namespace nc
 
 	void Scene::Update(float dt)
 	{
+		m_dt = dt;
 		// update and remove destroyed actors
 		auto iter = m_actors.begin();
 		while (iter != m_actors.end())
@@ -25,35 +24,38 @@ namespace nc
 
 	void Scene::Draw(Renderer& renderer)
 	{
-		// get light components
-		std::vector<LightComponent*> lights;
-		for (auto& actor : m_actors)
-		{
-			if (!actor->active) continue;
 
-			auto component = actor->GetComponent<LightComponent>();
-			if (component)
-			{
-				lights.push_back(component);
-			}
-		}
+		// get light components
+		auto lights = GetComponents<LightComponent>();
 
 		// get camera component
-		CameraComponent* camera = nullptr;
-		for (auto& actor : m_actors)
-		{
-			if (!actor->active) continue;
-
-			camera = actor->GetComponent <CameraComponent>();
-			if (camera) { break; };
-				
-		}
-		
-
-	
+		auto cameras = GetComponents<CameraComponent>();
+		//get first active camera component
+		CameraComponent* camera = (!cameras.empty()) ? cameras[0] : nullptr;
 
 		// get all shader programs in the resource system
-		auto programs = ResourceManager::Instance().GetAllOfType<Program>();
+		auto programs = GET_RESOURCES(Program);
+		// set all shader programs camera and lights uniforms
+		for (auto& program : programs)
+		{
+			program->Use();
+
+			// set lights in shader program
+			int index = 0;
+			for (auto light : lights)
+			{
+				glm::mat4 view = (camera) ? camera->view : glm::mat4(1);
+				std::string name = "lights[" + std::to_string(index++) + "]";
+
+				light->SetProgram(program, name, view);
+			}
+
+			program->SetUniform("numLights", index);
+			program->SetUniform("ambientLight", ambientColor);
+		}
+
+		// get all shader programs in the resource system
+		//programs = ResourceManager::Instance().GetAllOfType<Program>();
 		// set all shader programs camera and lights uniforms
 		for (auto& program : programs)
 		{
@@ -61,22 +63,12 @@ namespace nc
 
 			// set camera in shader program
 			if (camera) camera->SetProgram(program);
-
-			int index = 0;
-			for (auto light : lights)
-			{
-				std::string name = "lights[" + std::to_string(index++) + "]";
-				light->SetProgram(program, name);
-			}
-
-			program->SetUniform("numLights", index);
-			program->SetUniform("ambientLight", ambientColor);
 		}
 
-        for (auto& actor : m_actors)
-        {
-            if (actor->active) actor->Draw(renderer);
-        }
+		for (auto& actor : m_actors)
+		{
+			if (actor->active) actor->Draw(renderer);
+		}
 	}
 
 	void Scene::Add(std::unique_ptr<Actor> actor)
@@ -92,6 +84,20 @@ namespace nc
 		while (iter != m_actors.end())
 		{
 			(force || !(*iter)->persistent) ? iter = m_actors.erase(iter) : iter++;
+		}
+	}
+
+	void Scene::Remove(Actor* Actor)
+	{
+		auto iter = m_actors.begin();
+		while (iter != m_actors.end())
+		{
+			if ((*iter).get() == Actor)
+			{
+				m_actors.erase(iter);
+				break;
+			}
+			iter++;
 		}
 	}
 
@@ -137,31 +143,11 @@ namespace nc
 
 	void Scene::ProcessGui()
 	{
-		ImGui::Begin("Scene");
+		float fps = 1 / m_dt;
+		float ms = 1000 * m_dt;
+		ImVec4 color = (fps < 30) ? ImVec4{ 1,0,0,1 } : ImVec4{ 1,1,1,1 };
+		ImGui::TextColored(color, "%.2f FPS (%.2f)", fps, ms);
 		ImGui::ColorEdit3("Ambient", glm::value_ptr(ambientColor));
-		ImGui::Separator();
-
-
-
-		for (auto& actor : m_actors)
-		{
-			if (ImGui::Selectable(actor->name.c_str(), actor->guiSelect))
-			{
-				std::for_each(m_actors.begin(), m_actors.end(), [](auto& a) { a->guiSelect = false; });
-				actor->guiSelect = true;
-			}
-		}
-		ImGui::End();
-
-
-
-		ImGui::Begin("Inspector");
-		auto iter = std::find_if(m_actors.begin(), m_actors.end(), [](auto& a) { return a->guiSelect; });
-		if (iter != m_actors.end())
-		{
-			(*iter)->ProcessGui();
-		}
-		ImGui::End();
 	}
 
 }

@@ -1,0 +1,4 @@
+{
+  "program": "shaders/post_process.prog",
+  "albedoTexture": "Textures/color_grid.png"
+}

@@ -41,9 +41,3 @@ WARNING: Program.cpp(165) Could not find uniform location: shadingLevels
 WARNING: Program.cpp(165) Could not find uniform location: shadowVP
 WARNING: Program.cpp(165) Could not find uniform location: shadowBias
 WARNING: Program.cpp(165) Could not find uniform location: shadingLevels
-WARNING: Program.cpp(165) Could not find uniform location: celSpecularCutoff
-WARNING: Program.cpp(165) Could not find uniform location: celOutline
-WARNING: Program.cpp(165) Could not find uniform location: celSpecularCutoff
-WARNING: Program.cpp(165) Could not find uniform location: celOutline
-WARNING: Program.cpp(165) Could not find uniform location: celSpecularCutoff
-WARNING: Program.cpp(165) Could not find uniform location: celOutline

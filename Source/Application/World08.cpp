@@ -5,14 +5,14 @@
 #include <glm/glm/gtc/type_ptr.hpp>
 #include<glm/glm/gtx/color_space.hpp>
 
-namespace Twili
+namespace nc
 {
 	
 
 	bool World08::Initialize()
 	{
 		m_scene = std::make_unique<Scene>();
-		m_scene->Load("Scenes/scene_looney_tunes.json");
+		m_scene->Load("Scenes/scene_celshading.json");
 		m_scene->Initialize();
 
 		auto texture = std::make_shared<Texture>();

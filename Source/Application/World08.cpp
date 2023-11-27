@@ -51,9 +51,10 @@ namespace nc
         ENGINE.GetSystem<Gui>()->BeginFrame();
 
         m_scene->Update(dt);
-
+        m_editor->Update();
         m_editor->ProcessGui(m_scene.get());
 
+        
         ImGui::Begin("Cel");
         ImGui::SliderInt("Levels", &m_celLevels, 1, 8);
         ImGui::SliderFloat("Specular Cutoff", &m_celSpecularCutoff, 0, 1);

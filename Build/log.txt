@@ -6,6 +6,8 @@ INFO: Factory.h(75) Class registered: CameraController
 INFO: Factory.h(75) Class registered: CameraComponent
 INFO: Factory.h(75) Class registered: Actor
 INFO: Main.cpp(17) Initialize Engine...
+WARNING: Texture.cpp(88) Could not create surface: textures/blue-wooden-chair.png
+WARNING: ResourceManager.h(69) Could not create resource: textures/blue-wooden-chair.png
 WARNING: Program.cpp(165) Could not find uniform location: ambientLight
 WARNING: Program.cpp(165) Could not find uniform location: lights[0].type
 WARNING: Program.cpp(165) Could not find uniform location: lights[0].position
